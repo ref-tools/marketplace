@@ -1,0 +1,20 @@
+{
+  "name": "ref-context",
+  "version": "1.0.0",
+  "description": "Documentation search over public and private docs via the Ref Context MCP server.",
+  "author": {
+    "name": "Ref",
+    "url": "https://ref.tools"
+  },
+  "homepage": "https://docs.ref.tools/context/install/claude-code",
+  "license": "MIT",
+  "userConfig": {
+    "api_key": {
+      "type": "string",
+      "title": "Ref API key",
+      "description": "Your Ref API key from https://ref.tools/keys",
+      "sensitive": true,
+      "required": true
+    }
+  }
+}
