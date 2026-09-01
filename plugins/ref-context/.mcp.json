@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "Ref": {
+      "type": "http",
+      "url": "https://api.ref.tools/mcp",
+      "headers": { "x-ref-api-key": "${user_config.api_key}" }
+    }
+  }
+}
