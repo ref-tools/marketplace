@@ -22,7 +22,13 @@ Supports **Claude Code** and **Codex**. It signs you in through your browser —
 - hooks so Ref can track and manage your local agents
 - the **Ref Plans** MCP server, so agents can read, write, and coordinate on plans
 
-Re-run it anytime to upgrade in place. To sign in as a different account, use `bash -s -- --reconnect`; to remove everything, see [Uninstall](#uninstall).
+Re-run it anytime to upgrade in place. To sign in as a different account:
+
+```sh
+curl -fsSL https://api.plan.ref.tools/plugins/install/local-agent | bash -s -- --reconnect
+```
+
+To remove everything, see [Uninstall](#uninstall).
 
 ## Skills
 
