@@ -1,6 +1,6 @@
 # Ref Marketplace
 
-A Claude Code plugin marketplace for [Ref](https://ref.tools).
+Claude Code plugins and skills for [Ref](https://ref.tools).
 
 #### What is Ref?
 
@@ -8,65 +8,70 @@ Ref is a tool for plan authorship and review. Humans and agents work together in
 
 Plan Review moves alignment up front — the team ratifies key decisions before the code gets written, instead of after in code review. It's the cure for [Velocity Sickness](https://ref.tools/blog/ai-broke-alignment).
 
+## Easy install
 
-## Install
+**Run the install script.** It sets up every supported agent it finds on your machine:
 
-Add the marketplace once:
+```sh
+curl -fsSL https://api.plan.ref.tools/plugins/install/local-agent | bash
+```
+
+Supports **Claude Code** and **Codex**. It signs you in through your browser — no API key to copy, no config files to edit — and installs:
+
+- the `ref` CLI to allow your agents more access to control Ref
+- hooks so Ref can track and manage your local agents
+- the **Ref Plans** MCP server, so agents can read, write, and coordinate on plans
+
+Re-run it anytime to upgrade in place. To sign in as a different account, use `bash -s -- --reconnect`; to remove everything, see [Uninstall](#uninstall).
+
+## Skills
+
+Skills in this repo install through the Claude Code marketplace:
 
 ```sh
 claude plugin marketplace add ref-tools/marketplace
-```
-
-Then install the plugins you want:
-
-```sh
-claude plugin install ref-plan@ref-tools
-claude plugin install ref-context@ref-tools
 claude plugin install ref-design-process@ref-tools
 ```
 
-You'll be prompted for your Ref API key when enabling an MCP server plugin. Get a key at [ref.tools/keys](https://ref.tools/keys).
+| Skill | What it does |
+|---|---|
+| `ref-design-process` | Guides agents through Ref's design process — how to structure a plan, and what to check before calling one done. (Stub — content coming.) |
 
-## Plugins
+## MCP servers
+
+The install script already sets up Ref Plans for Claude Code and Codex, so **most people don't need this section.** 
 
 | Plugin | What it does |
 |---|---|
-| `ref-plan` | MCP server for [Ref Plans](https://docs.ref.tools/plans/install/index) — list, create, read, and edit plan documents, and coordinate sub-agents. |
-| `ref-context` | MCP server for [Ref docs search](https://docs.ref.tools/context/install/index) — `ref_search_documentation` over public and private docs without wasting your context window. |
-| `ref-design-process` | A skill that guides agents through Ref's design process. (Stub — content coming.) |
-
-For full details — other editors and team scoping — see [docs.ref.tools](https://docs.ref.tools).
-
-## Project-scope installs for teams
-
-Teams that want the plugins committed to source control use `--scope project`:
+| `ref-context` | [Ref docs search](https://docs.ref.tools/context/install/index) — `ref_search_documentation` over public and private docs without burning your context window. Not included in the install script. |
+| `ref-plan` | [Ref Plans](https://docs.ref.tools/plans/install/index) — list, create, read, and edit plans, and coordinate sub-agents. Same server the install script sets up; use this only if you skipped the script. |
 
 ```sh
-claude plugin marketplace add ref-tools/marketplace --scope project
-claude plugin install ref-plan@ref-tools --scope project
-claude plugin install ref-context@ref-tools --scope project
-claude plugin install ref-design-process@ref-tools --scope project
+claude plugin marketplace add ref-tools/marketplace
+claude plugin install ref-context@ref-tools
 ```
 
-`marketplace add --scope project` writes `extraKnownMarketplaces` into the project's `.claude/settings.json`. Each `plugin install --scope project` writes that plugin into `enabledPlugins`. Commit the file so teammates who trust the project pick the plugins up automatically instead of installing by hand.
+You'll be prompted for your Ref API key when enabling either server. Get one at [ref.tools/keys](https://ref.tools/keys).
 
-## API keys stay per-user, even at project scope
+For Cursor, VS Code, Windsurf, ChatGPT, and others, see [docs.ref.tools](https://docs.ref.tools).
 
-Do not commit a shared Ref API key. Claude Code reads `pluginConfigs` from only three sources — managed settings, `--settings`, and user settings. Entries in a project's `.claude/settings.json` (or `.claude/settings.local.json`) are ignored: a v2.1.207 security change so a cloned repo can't inject values into server configs.
+## Uninstall
 
-The practical consequence: `enabledPlugins` is shared via the committed project settings, but every team member is still prompted for their own Ref API key when the plugin is enabled. Sensitive values go to the OS keychain, not into any settings file. On macOS they fall back to `~/.claude/.credentials.json` if the Keychain rejects the write; platforms without a supported keychain always use that file.
+```sh
+curl -fsSL 'https://api.plan.ref.tools/plugins/install/local-agent?mode=uninstall' | bash -s -- --uninstall
+```
 
-## Local development for contributors
+Your API key stays active on your account — revoke it at [ref.tools/keys](https://ref.tools/keys) if you're done with it.
 
-To work on a plugin in this repo, load it straight from disk without publishing:
+## Contributing
+
+Load a plugin from disk without publishing:
 
 ```sh
 claude --plugin-dir ./plugins/ref-context
 ```
 
-`/reload-plugins` picks up edits mid-session.
-
-Validate the marketplace before opening a PR:
+`/reload-plugins` picks up edits mid-session. Validate before opening a PR:
 
 ```sh
 claude plugin validate . --strict
