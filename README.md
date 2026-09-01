@@ -35,7 +35,7 @@ You'll be prompted for your Ref API key when enabling an MCP server plugin. Get 
 | `ref-context` | MCP server for [Ref docs search](https://docs.ref.tools/context/install/index) — `ref_search_documentation` over public and private docs without wasting your context window. |
 | `ref-design-process` | A skill that guides agents through Ref's design process. (Stub — content coming.) |
 
-For full details — other editors, plan-specific mode, team scoping, GitHub tools — see [docs.ref.tools](https://docs.ref.tools).
+For full details — other editors and team scoping — see [docs.ref.tools](https://docs.ref.tools).
 
 ## Project-scope installs for teams
 
@@ -54,7 +54,7 @@ claude plugin install ref-design-process@ref-tools --scope project
 
 Do not commit a shared Ref API key. Claude Code reads `pluginConfigs` from only three sources — managed settings, `--settings`, and user settings. Entries in a project's `.claude/settings.json` (or `.claude/settings.local.json`) are ignored: a v2.1.207 security change so a cloned repo can't inject values into server configs.
 
-The practical consequence: `enabledPlugins` is shared via the committed project settings, but every team member is still prompted for their own Ref API key when the plugin is enabled. Sensitive values go to the OS keychain (or `~/.claude/.credentials.json` on platforms without one), not into any settings file.
+The practical consequence: `enabledPlugins` is shared via the committed project settings, but every team member is still prompted for their own Ref API key when the plugin is enabled. Sensitive values go to the OS keychain, not into any settings file. On macOS they fall back to `~/.claude/.credentials.json` if the Keychain rejects the write; platforms without a supported keychain always use that file.
 
 ## Local development for contributors
 
