@@ -1,6 +1,6 @@
 {
   "name": "ref-plan",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "List, create, read, and edit Ref plan documents, and coordinate sub-agents.",
   "author": {
     "name": "Ref",

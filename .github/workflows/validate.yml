@@ -13,6 +13,35 @@ jobs:
         with:
           node-version: "22"
       - name: Install Claude Code CLI
-        run: npm install -g @anthropic-ai/claude-code
+        run: npm install -g @anthropic-ai/claude-code@2.1.295
       - name: Validate marketplace
         run: claude plugin validate . --strict
+
+  smoke:
+    runs-on: ubuntu-latest
+    env:
+      CLAUDE_CONFIG_DIR: ${{ runner.temp }}/claude
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code@2.1.295
+      - name: Install marketplace plugins
+        run: |
+          claude plugin marketplace add "$GITHUB_WORKSPACE"
+          claude plugin install ref-context@ref-tools --config api_key=ci-dummy
+          claude plugin install ref-plan@ref-tools --config api_key=ci-dummy
+          claude plugin install ref-design-process@ref-tools --config api_key=ci-dummy
+      - name: Check design-process skill
+        run: |
+          details="$(claude plugin details ref-design-process@ref-tools)"
+          printf '%s\n' "$details"
+          grep -F "Skills (1)  design-process" <<<"$details"
+      - name: Check discovered MCP servers
+        run: |
+          servers="$(claude mcp list 2>&1)"
+          printf '%s\n' "$servers"
+          grep -F "plugin:ref-context:" <<<"$servers" | grep -F "Needs authentication"
+          grep -F "plugin:ref-plan:RefPlan" <<<"$servers" | grep -F "Failed to connect"

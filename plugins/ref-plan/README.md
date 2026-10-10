@@ -10,10 +10,16 @@ Add the marketplace once, then install this plugin:
 
 ```sh
 claude plugin marketplace add ref-tools/marketplace
-claude plugin install ref-plan@ref-tools
+claude plugin install ref-plan@ref-tools --config api_key=YOUR_REF_API_KEY
 ```
 
-You'll be prompted for a Ref API key. Get one at [ref.tools/keys](https://ref.tools/keys).
+Plugin installation does not prompt for a Ref API key. Get one at [ref.tools/keys](https://ref.tools/keys) and pass it with `--config` as shown above.
+
+If you installed the plugin without its key, configure it from inside Claude Code:
+
+```text
+/plugin configure ref-plan@ref-tools
+```
 
 ## Team scoping
 
@@ -22,5 +28,5 @@ The Plans API can scope requests to a team with `?teamId=<TEAM_ID>`. This plugin
 If you need a team-scoped install today, add the server yourself:
 
 ```sh
-claude mcp add --transport http ref-plan "https://api.plan.ref.tools/mcp?teamId=<TEAM_ID>" --header "x-ref-api-key: <YOUR_API_KEY>"
+claude mcp add --transport http RefPlan "https://api.plan.ref.tools/mcp?teamId=<TEAM_ID>" --header "x-ref-api-key: <YOUR_API_KEY>"
 ```
