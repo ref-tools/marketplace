@@ -14,6 +14,7 @@
     {
       "name": "ref-plan",
       "source": "./plugins/ref-plan",
+      "version": "1.0.1",
       "description": "List, create, read, and edit Ref plan documents, and coordinate sub-agents."
     },
     {

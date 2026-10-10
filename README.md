@@ -54,10 +54,18 @@ The install script already sets up Ref Plans for Claude Code and Codex, so **mos
 
 ```sh
 claude plugin marketplace add ref-tools/marketplace
-claude plugin install ref-context@ref-tools
+claude plugin install ref-context@ref-tools --config api_key=YOUR_REF_API_KEY
+claude plugin install ref-plan@ref-tools --config api_key=YOUR_REF_API_KEY
 ```
 
-You'll be prompted for your Ref API key when enabling either server. Get one at [ref.tools/keys](https://ref.tools/keys).
+Plugin installation does not prompt for a Ref API key; get one at [ref.tools/keys](https://ref.tools/keys) and pass it with `--config` as shown above.
+
+If you installed a plugin without its key, configure it from inside Claude Code:
+
+```text
+/plugin configure ref-context@ref-tools
+/plugin configure ref-plan@ref-tools
+```
 
 For Cursor, VS Code, Windsurf, ChatGPT, and others, see [docs.ref.tools](https://docs.ref.tools).
 

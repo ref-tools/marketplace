@@ -10,7 +10,13 @@ Add the marketplace once, then install this plugin:
 
 ```sh
 claude plugin marketplace add ref-tools/marketplace
-claude plugin install ref-context@ref-tools
+claude plugin install ref-context@ref-tools --config api_key=YOUR_REF_API_KEY
 ```
 
-You'll be prompted for a Ref API key. Get one at [ref.tools/keys](https://ref.tools/keys).
+Plugin installation does not prompt for a Ref API key. Get one at [ref.tools/keys](https://ref.tools/keys) and pass it with `--config` as shown above.
+
+If you installed the plugin without its key, configure it from inside Claude Code:
+
+```text
+/plugin configure ref-context@ref-tools
+```

@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "ref-plan": {
+    "RefPlan": {
       "type": "http",
       "url": "https://api.plan.ref.tools/mcp",
       "headers": { "x-ref-api-key": "${user_config.api_key}" }
