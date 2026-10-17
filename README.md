@@ -37,11 +37,13 @@ Skills in this repo install through the Claude Code marketplace:
 ```sh
 claude plugin marketplace add ref-tools/marketplace
 claude plugin install ref-design-process@ref-tools
+claude plugin install ref-using-local-devices@ref-tools
 ```
 
 | Skill | What it does |
 |---|---|
 | `ref-design-process` | Guides agents through Ref's design process — how to structure a plan, and what to check before calling one done. (Stub — content coming.) |
+| `ref-using-local-devices` | Pick a paired laptop for `LaunchAgent` harness `local`, fall back when offline, and drive ACP children with `ManageAgent` (permissions, config, cancel/stop). |
 
 ## MCP servers
 

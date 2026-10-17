@@ -1,0 +1,11 @@
+{
+  "name": "ref-using-local-devices",
+  "version": "0.1.0",
+  "description": "Pick a local device for LaunchAgent and drive ACP children with ManageAgent.",
+  "author": {
+    "name": "Ref",
+    "url": "https://ref.tools"
+  },
+  "homepage": "https://ref.tools",
+  "license": "MIT"
+}

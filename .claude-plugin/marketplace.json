@@ -1,6 +1,6 @@
 {
   "name": "ref-tools",
-  "description": "Claude Code plugins for Ref — documentation search, plan documents, and the design-process skill.",
+  "description": "Claude Code plugins for Ref — documentation search, plan documents, and agent skills.",
   "owner": {
     "name": "Ref",
     "url": "https://ref.tools"
@@ -21,6 +21,11 @@
       "name": "ref-design-process",
       "source": "./plugins/ref-design-process",
       "description": "A skill that guides agents through Ref's design process. Stub — content coming."
+    },
+    {
+      "name": "ref-using-local-devices",
+      "source": "./plugins/ref-using-local-devices",
+      "description": "Pick a local device for LaunchAgent and drive ACP children with ManageAgent."
     }
   ]
 }

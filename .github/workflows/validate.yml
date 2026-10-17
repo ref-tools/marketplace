@@ -34,11 +34,17 @@ jobs:
           claude plugin install ref-context@ref-tools --config api_key=ci-dummy
           claude plugin install ref-plan@ref-tools --config api_key=ci-dummy
           claude plugin install ref-design-process@ref-tools
+          claude plugin install ref-using-local-devices@ref-tools
       - name: Check design-process skill
         run: |
           details="$(claude plugin details ref-design-process@ref-tools)"
           printf '%s\n' "$details"
           grep -F "Skills (1)  design-process" <<<"$details"
+      - name: Check using-local-devices skill
+        run: |
+          details="$(claude plugin details ref-using-local-devices@ref-tools)"
+          printf '%s\n' "$details"
+          grep -F "Skills (1)  using-local-devices" <<<"$details"
       - name: Check discovered MCP servers
         run: |
           servers="$(claude mcp list 2>&1)"
