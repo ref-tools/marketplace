@@ -1,6 +1,7 @@
 ---
 name: using-local-devices
-description: Picking a device for a local agent and falling back to cloud when the device is offline. Use when launching an agent on a user's machine.
+description: "Picking a device for a local agent and falling back to cloud when the device is offline. Use when launching an agent on a user's machine."
+user-invocable: false
 ---
 
 # Using local devices
@@ -15,7 +16,7 @@ ref-plan:LaunchAgent with harness "local" needs `deviceId` and `repo`. Take `rep
 
 A message to a live local session is held and delivered when the current session ends. Expect the delay; do not resend on silence.
 
-When local ACP is on, expect wake messages for needs permission, errored, stopped by user, machine offline / back online, and turn ended. Watch and unblock with ref-plan:ManageAgent: `read` for status, pending permission and a compact log; `answer_permission` for an offered option — never `allow_always` (returns `needs_human`; tell the user); `set_config` for model/mode; `cancel` for the turn; `stop` for the run. Follow-ups stay in SendMessage, which resumes a stopped run in a new session. With no wakeups, `read` with `waitSeconds` instead of tight polling. An agent-scoped session may only drive its own children.
+When local ACP is on, watch and unblock children with ref-plan:ManageAgent: `read` for status, pending permission and a compact log (optional `waitSeconds`); `answer_permission` for an offered option (`allow_always` returns `needs_human` and stays for the person); `set_config` for model/mode; `cancel` for the turn; `stop` for the run. Prompting stays in SendMessage. An agent-scoped session may only drive its own children.
 
 Local has no GitHub-side PR detection, so the child's ref-plan:PrLinks action "add" call is the only attach path. Repeat it in any follow-up that asks for another PR.
 
