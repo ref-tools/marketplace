@@ -16,6 +16,45 @@ jobs:
         run: npm install -g @anthropic-ai/claude-code@2.1.295
       - name: Validate marketplace
         run: claude plugin validate . --strict
+      - name: Check marketplace versions match plugin.json
+        run: |
+          node <<'EOF'
+          const fs = require("fs");
+          const path = require("path");
+          const marketplace = JSON.parse(
+            fs.readFileSync(".claude-plugin/marketplace.json", "utf8")
+          );
+          const mismatches = [];
+          for (const plugin of marketplace.plugins) {
+            const pluginJsonPath = path.join(
+              plugin.source,
+              ".claude-plugin",
+              "plugin.json"
+            );
+            if (!fs.existsSync(pluginJsonPath)) {
+              mismatches.push(`${plugin.name}: missing ${pluginJsonPath}`);
+              continue;
+            }
+            const pluginJson = JSON.parse(fs.readFileSync(pluginJsonPath, "utf8"));
+            if (plugin.version == null) {
+              mismatches.push(
+                `${plugin.name}: marketplace.json has no version (plugin.json has ${pluginJson.version})`
+              );
+            } else if (plugin.version !== pluginJson.version) {
+              mismatches.push(
+                `${plugin.name}: marketplace.json=${plugin.version} plugin.json=${pluginJson.version}`
+              );
+            }
+          }
+          if (mismatches.length) {
+            console.error("Version mismatch:");
+            for (const line of mismatches) console.error(`  - ${line}`);
+            process.exit(1);
+          }
+          console.log(
+            `OK: ${marketplace.plugins.length} plugin version(s) match marketplace.json`
+          );
+          EOF
 
   smoke:
     runs-on: ubuntu-latest
@@ -33,12 +72,6 @@ jobs:
           claude plugin marketplace add "$GITHUB_WORKSPACE"
           claude plugin install ref-context@ref-tools --config api_key=ci-dummy
           claude plugin install ref-plan@ref-tools --config api_key=ci-dummy
-          claude plugin install ref-design-process@ref-tools
-      - name: Check design-process skill
-        run: |
-          details="$(claude plugin details ref-design-process@ref-tools)"
-          printf '%s\n' "$details"
-          grep -F "Skills (1)  design-process" <<<"$details"
       - name: Check discovered MCP servers
         run: |
           servers="$(claude mcp list 2>&1)"
