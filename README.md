@@ -1,5 +1,3 @@
-# Ref Marketplace
-
 Plugins and Skills for [Ref](https://ref.tools).
 
 [![Website](https://img.shields.io/badge/Website-ref.tools-2b7bbf)](https://ref.tools) [![License: MIT](https://img.shields.io/badge/License-MIT-5a9e1a)](LICENSE)
