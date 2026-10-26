@@ -16,6 +16,31 @@ jobs:
         run: npm install -g @anthropic-ai/claude-code@2.1.295
       - name: Validate marketplace
         run: claude plugin validate . --strict
+      - name: Check marketplace versions match plugin.json
+        run: |
+          mismatch=0
+          while IFS= read -r row; do
+            name="$(jq -r '.name' <<<"$row")"
+            market_version="$(jq -r '.version // empty' <<<"$row")"
+            source="$(jq -r '.source' <<<"$row")"
+            plugin_json="$source/.claude-plugin/plugin.json"
+            if [[ ! -f "$plugin_json" ]]; then
+              echo "missing plugin.json for $name at $plugin_json"
+              mismatch=1
+              continue
+            fi
+            plugin_version="$(jq -r '.version' "$plugin_json")"
+            if [[ -z "$market_version" ]]; then
+              echo "$name: marketplace.json has no version (plugin.json is $plugin_version)"
+              mismatch=1
+            elif [[ "$market_version" != "$plugin_version" ]]; then
+              echo "$name: marketplace.json version $market_version != plugin.json version $plugin_version"
+              mismatch=1
+            else
+              echo "$name: $market_version matches"
+            fi
+          done < <(jq -c '.plugins[]' .claude-plugin/marketplace.json)
+          exit "$mismatch"
 
   smoke:
     runs-on: ubuntu-latest
@@ -33,12 +58,6 @@ jobs:
           claude plugin marketplace add "$GITHUB_WORKSPACE"
           claude plugin install ref-context@ref-tools --config api_key=ci-dummy
           claude plugin install ref-plan@ref-tools --config api_key=ci-dummy
-          claude plugin install ref-design-process@ref-tools
-      - name: Check design-process skill
-        run: |
-          details="$(claude plugin details ref-design-process@ref-tools)"
-          printf '%s\n' "$details"
-          grep -F "Skills (1)  design-process" <<<"$details"
       - name: Check discovered MCP servers
         run: |
           servers="$(claude mcp list 2>&1)"

@@ -1,6 +1,6 @@
 {
   "name": "ref-tools",
-  "description": "Claude Code plugins for Ref — documentation search, plan documents, and the design-process skill.",
+  "description": "Claude Code plugins for Ref — documentation search and the Ref MCP server.",
   "owner": {
     "name": "Ref",
     "url": "https://ref.tools"
@@ -9,18 +9,14 @@
     {
       "name": "ref-context",
       "source": "./plugins/ref-context",
+      "version": "1.0.0",
       "description": "Documentation search over public and private docs via the Ref Context MCP server."
     },
     {
       "name": "ref-plan",
       "source": "./plugins/ref-plan",
       "version": "1.0.1",
-      "description": "List, create, read, and edit Ref plan documents, and coordinate sub-agents."
-    },
-    {
-      "name": "ref-design-process",
-      "source": "./plugins/ref-design-process",
-      "description": "A skill that guides agents through Ref's design process. Stub — content coming."
+      "description": "List, read, and write refs via the Ref MCP server, and coordinate sub-agents."
     }
   ]
 }
