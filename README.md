@@ -1,12 +1,12 @@
-# Ref Marketplace
-
 Plugins and Skills for [Ref](https://ref.tools).
+
+[![Website](https://img.shields.io/badge/Website-ref.tools-2b7bbf)](https://ref.tools) [![License: MIT](https://img.shields.io/badge/License-MIT-5a9e1a)](LICENSE)
 
 #### What is Ref?
 
 Ref is a tool for authorship and review. Humans and agents work together in shared refs: you write and review refs as a team, agents read them, do the work, and report progress back.
 
-Review moves alignment up front — the team ratifies key decisions before the code gets written, instead of after in code review. It's the cure for [Velocity Sickness](https://ref.tools/blog/ai-broke-alignment).
+Review moves alignment up front: the team ratifies key decisions before the code gets written, instead of after in code review. It's the cure for [Velocity Sickness](https://ref.tools/blog/ai-broke-alignment).
 
 ## Easy install
 
