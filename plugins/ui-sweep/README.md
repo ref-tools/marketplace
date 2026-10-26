@@ -71,7 +71,7 @@ Optional mid-run choices (the skill may ask): which external integrations to cal
 
 ## If your agent is missing the Ref MCP
 
-**Claude Code and Codex** — run the install script (sets up Ref Plans for both):
+**Claude Code and Codex** — run the install script (sets up the Ref MCP server for both):
 
 ```sh
 curl -fsSL https://api.plan.ref.tools/plugins/install/local-agent | bash
