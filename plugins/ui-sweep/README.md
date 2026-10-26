@@ -1,6 +1,6 @@
-# ui-sweep
+# 🧹 ui-sweep
 
-An agent skill that turns "sweep the UI of this web app feature" into a repeatable run in any repo whose app can run locally. It works with any coding agent that supports SKILL.md skills and can run subagents or parallel background tasks (Claude Code, Codex, Cursor, and others). Designed for **web apps** driven in a headless browser — native iOS/Android apps are out of scope.
+An agent skill that turns "sweep the UI of this web app feature" into a repeatable run in any repo whose app can run locally. Designed for **web apps** driven in a headless browser. Native iOS/Android apps are out of scope.
 
 A sweep **boots an isolated local copy of the app**, screenshots every screen and state into a Ref the team can comment on, and reports the bugs it finds with short fix proposals. That costs **dev-server / sandbox processes and agent tokens**. With `--fix`, it also opens **draft PRs** (one per area), works review comments, and runs an integrated gate before you merge.
 
