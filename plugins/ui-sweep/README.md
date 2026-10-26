@@ -1,34 +1,48 @@
 # ui-sweep
 
-Claude Code skill that turns "sweep the UI of this feature" into a repeatable run in any repo whose app can run locally.
+An agent skill that turns "sweep the UI of this feature" into a repeatable run in any repo whose app can run locally. It works with any coding agent that supports SKILL.md skills and can run subagents or parallel background tasks (Claude Code, Codex, Cursor, and others).
 
 A sweep **boots an isolated local copy of the app**, screenshots every screen and state into a Ref the team can comment on, and reports the bugs it finds with short fix proposals. That costs **dev-server / sandbox processes and agent tokens**. With `--fix`, it also opens **draft PRs** (one per area), works review comments, and runs an integrated gate before you merge.
 
-## Install Ref MCP (`ref-plan`)
+## Install the Ref MCP
+
+**Claude Code and Codex** — run the install script (sets up Ref Plans for both):
+
+```sh
+curl -fsSL https://api.plan.ref.tools/plugins/install/local-agent | bash
+```
+
+**Claude Code alternative** — install the `ref-plan` plugin from this marketplace:
 
 ```sh
 claude plugin marketplace add ref-tools/marketplace
 claude plugin install ref-plan@ref-tools --config api_key=YOUR_REF_API_KEY
 ```
 
-Get a key at [ref.tools/keys](https://ref.tools/keys). If you installed without a key:
+Get a key at [ref.tools/keys](https://ref.tools/keys). If you installed without a key: `/plugin configure ref-plan@ref-tools`.
 
-```text
-/plugin configure ref-plan@ref-tools
-```
+**Other agents** — see [docs.ref.tools/plans/install](https://docs.ref.tools/plans/install/index).
 
-## Install this plugin
+## Install this skill
+
+**Claude Code** — from this marketplace:
 
 ```sh
 claude plugin marketplace add ref-tools/marketplace
 claude plugin install ui-sweep@ref-tools
 ```
 
+**Other agents** — copy `plugins/ui-sweep/skills/ui-sweep/` into your agent's skills directory; see your agent's docs for where that is.
+
 ## Usage
+
+Where the agent supports slash commands:
 
 ```text
 /ui-sweep <feature ref | PR numbers | commit range> [--fix]
 ```
+
+Or in plain language: `run ui-sweep on <feature ref>, with --fix`.
 
 | Argument | Meaning |
 | --- | --- |
@@ -49,8 +63,8 @@ The skill never merges PRs or marks them ready; you do.
 
 ## Requirements
 
-- **Ref MCP** — write refs, upload media, manage comments, attach PRs. Install the `ref-plan` plugin from this marketplace (see [Install Ref MCP](#install-ref-mcp-ref-plan) above). If it isn't connected, `/ui-sweep` stops before booting anything.
-- **Subagents** — the orchestrator fans out inventory, capture, upload, and (with `--fix`) fix agents.
+- **Ref MCP** — write refs, upload media, manage comments, attach PRs. Install via [Install the Ref MCP](#install-the-ref-mcp) above. If it isn't connected, `/ui-sweep` stops before booting anything.
+- **Subagents or parallel background tasks** — the orchestrator fans out inventory, capture, upload, and (with `--fix`) fix agents. If the agent has neither, run those agents one after another.
 - **Playwright** (or another headless browser library the sweep can drive).
 - **`git`**, plus **`gh`** when using `--fix`.
 - A way to run the app locally (discovered from agent docs, launch config, e2e/demo harness, or package scripts).

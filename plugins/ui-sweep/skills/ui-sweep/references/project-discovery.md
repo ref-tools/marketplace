@@ -4,8 +4,8 @@ How to find a local run path, isolate the sandbox, and what to ask when it's unc
 
 ## Find the run path (in order)
 
-1. **Project skill or agent doc** — `AGENTS.md`, `CLAUDE.md`, or a skill named like `run`, `dev`, `dev-stack`, `demo`.
-2. **Launch config** — e.g. `.claude/launch.json` or similar agent launch files.
+1. **Project skill or agent doc** — `AGENTS.md` / `CLAUDE.md` or the agent's instruction file, or a skill named like `run`, `dev`, `dev-stack`, `demo`.
+2. **Launch config** — e.g. `.claude/launch.json`, or another agent's equivalent launch / run config.
 3. **E2E or demo harness** — prefer this when present: it usually boots an isolated copy with seeded users.
 4. **README and package scripts** — `dev`, `start`, `docker compose`, Make targets.
 

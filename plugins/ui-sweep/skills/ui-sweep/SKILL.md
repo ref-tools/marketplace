@@ -8,16 +8,9 @@ argument-hint: <feature ref | PR numbers | commit range> [--fix]
 
 A sweep boots servers and spends agent tokens (and with `--fix` opens PRs), so confirm with the user before booting if they didn't explicitly ask for a sweep.
 
-**Stop first if the Ref MCP is not connected.** Do not boot anything. Point the user at the `ref-plan` plugin:
+**Stop first if the Ref MCP is not connected.** Do not boot anything. Connect the Ref MCP (install script for Claude Code / Codex, or https://docs.ref.tools/plans/install/index for other agents).
 
-```sh
-claude plugin marketplace add ref-tools/marketplace
-claude plugin install ref-plan@ref-tools --config api_key=<key>
-```
-
-Key from [ref.tools/keys](https://ref.tools/keys). Then `/plugin configure ref-plan@ref-tools` if needed.
-
-Also needs: subagents, Playwright (or equivalent), `git`, and `gh` for `--fix`. Without `gh` and `--fix` was requested, say so and stop after the report.
+Also needs: subagents or parallel background tasks (if the agent has neither, run the capture and fix agents one after another); Playwright (or equivalent); `git`; and `gh` for `--fix`. Without `gh` and `--fix` was requested, say so and stop after the report.
 
 Paths below are relative to this skill's own directory (next to this file).
 
@@ -37,7 +30,7 @@ Paths below are relative to this skill's own directory (next to this file).
 
 ## Role
 
-You are the **orchestrator**. Never screenshot or fix code yourself. Boot the sandbox, write the shared brief, fan out subagents, keep both refs current, relay decisions. Subagents run in the background and report back. Forward follow-ups to the agent that already has context — do not start a new one for them.
+You are the **orchestrator**. Never screenshot or fix code yourself. Boot the sandbox, write the shared brief, fan out subagents (or parallel background tasks), keep both refs current, relay decisions. Those agents run in the background and report back; if this agent has no subagents or parallel tasks, run them one after another. Forward follow-ups to the agent that already has context — do not start a new one for them.
 
 ## Workflow
 
@@ -45,7 +38,7 @@ You are the **orchestrator**. Never screenshot or fix code yourself. Boot the sa
 
 - Read every feature ref plus the PRs/commits it lists.
 - **Create the catalog ref immediately**, before research: opening + TODO box.
-- Fan out an **inventory agent** (Explore, read-only). Prompt: `references/inventory-prompt.md`. Save `INVENTORY.md` in the catalog workspace; every later agent reads it.
+- Fan out an **inventory agent** (a read-only research subagent). Prompt: `references/inventory-prompt.md`. Save `INVENTORY.md` in the catalog workspace; every later agent reads it.
 
 ### 2. Pre-flight and sandbox
 

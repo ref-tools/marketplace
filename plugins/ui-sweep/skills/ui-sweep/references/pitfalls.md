@@ -7,7 +7,7 @@ Habits that avoid wasting a phase.
 - **Review bots don't converge by themselves.** Findings get narrower each round. Set the fix-or-defer bar up front; record deferred edges as follow-ups in the Bugs ref.
 - **The user merges in their own order.** That changes which branch needs each conflict resolution. Re-check PR states after every merge.
 - **Symlinked dependencies in a worktree break a few suites.** Note them as known; the integration run needs a real install in its own worktree.
-- **A case-insensitive filesystem.** A generated `claude.md` loads as `CLAUDE.md` instructions. Never name generated files after instruction files.
+- **A case-insensitive filesystem.** A generated `claude.md` loads as `AGENTS.md` / `CLAUDE.md` or the agent's instruction file. Never name generated files after instruction files.
 - **Shell traps:**
   - zsh doesn't word-split `$VAR` lists; use `xargs`.
   - An apostrophe in a `gh api -f body='…'` reply breaks quoting; write the body to a file and use `-F body=@file`.

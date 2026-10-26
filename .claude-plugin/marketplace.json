@@ -26,7 +26,7 @@
       "name": "ui-sweep",
       "source": "./plugins/ui-sweep",
       "version": "0.1.0",
-      "description": "Sweep a feature's UI end to end: sandbox the app, catalog every screen into a Ref, report bugs with fix proposals; with --fix, ship draft PRs and work the review loop."
+      "description": "Agent skill to sweep a feature's UI end to end: sandbox the app, catalog every screen into a Ref, report bugs with fix proposals; with --fix, ship draft PRs and work the review loop."
     }
   ]
 }

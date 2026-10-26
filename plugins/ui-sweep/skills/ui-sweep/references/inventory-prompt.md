@@ -1,6 +1,6 @@
 # Inventory agent prompt
 
-Use with an Explore / read-only subagent. Save the result as `INVENTORY.md` in the catalog workspace.
+Use with a read-only research subagent. Save the result as `INVENTORY.md` in the catalog workspace.
 
 ## Prompt skeleton
 
