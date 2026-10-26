@@ -1,0 +1,26 @@
+{
+  "name": "ref-skills",
+  "interface": {
+    "displayName": "Ref Skills"
+  },
+  "plugins": [
+    {
+      "name": "ref-context",
+      "source": "./plugins/ref-context",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "ref-plan",
+      "source": "./plugins/ref-plan",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

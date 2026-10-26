@@ -1,0 +1,12 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ref-plan",
+  "version": "1.0.1",
+  "description": "List, read, and write refs, and coordinate sub-agents.",
+  "author": {
+    "name": "Ref",
+    "url": "https://ref.tools"
+  },
+  "homepage": "https://docs.ref.tools/plans/install/claude-code",
+  "license": "MIT"
+}

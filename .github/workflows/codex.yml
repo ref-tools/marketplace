@@ -1,0 +1,33 @@
+name: Codex
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  marketplace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install Codex CLI
+        run: npm install -g @openai/codex@0.164.0
+      - name: Add marketplace and require both plugins
+        env:
+          CODEX_HOME: ${{ runner.temp }}/codex-home
+        run: |
+          mkdir -p "$CODEX_HOME"
+          codex plugin marketplace add "$GITHUB_WORKSPACE"
+          listed="$(codex plugin list --marketplace ref-skills --available --json)"
+          printf '%s\n' "$listed"
+          LISTED="$listed" python3 - <<'PY'
+          import json, os
+          data = json.loads(os.environ["LISTED"])
+          names = {p["name"] for p in data.get("available", []) + data.get("installed", [])}
+          missing = {"ref-context", "ref-plan"} - names
+          if missing:
+              raise SystemExit(f"missing plugins from ref-skills marketplace: {sorted(missing)}; got {sorted(names)}")
+          print("ok:", ", ".join(sorted(names)))
+          PY
