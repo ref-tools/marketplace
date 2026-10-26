@@ -1,8 +1,8 @@
 # ref-plan
 
-Claude Code plugin for [Ref Plans](https://docs.ref.tools/plans/install/index) — list, create, read, and edit plan documents, and coordinate sub-agents.
+Claude Code plugin for [Ref](https://docs.ref.tools/plans/install/index) — list, read, and write refs, and coordinate sub-agents.
 
-The plugin wraps the streamable-HTTP MCP server at `https://api.plan.ref.tools/mcp` in **general mode**. After you enable it, tools such as `List`, `Create`, `Read`, and `Edit` are available.
+The plugin wraps the streamable-HTTP MCP server at `https://api.plan.ref.tools/mcp` in **general mode**. After you enable it, tools such as `List`, `Read`, and `Write` are available.
 
 ## Install
 
@@ -23,7 +23,7 @@ If you installed the plugin without its key, configure it from inside Claude Cod
 
 ## Team scoping
 
-The Plans API can scope requests to a team with `?teamId=<TEAM_ID>`. This plugin does not prompt for a team ID: plugin manifests have no conditional templating, so a blank value would become the literal URL `https://api.plan.ref.tools/mcp?teamId=`. Until that can be omitted cleanly, the plugin uses the base URL (the same default as the [Claude Code install docs](https://docs.ref.tools/plans/install/claude-code)).
+The API can scope requests to a team with `?teamId=<TEAM_ID>`. This plugin does not prompt for a team ID: plugin manifests have no conditional templating, so a blank value would become the literal URL `https://api.plan.ref.tools/mcp?teamId=`. Until that can be omitted cleanly, the plugin uses the base URL (the same default as the [Claude Code install docs](https://docs.ref.tools/plans/install/claude-code)).
 
 If you need a team-scoped install today, add the server yourself:
 
