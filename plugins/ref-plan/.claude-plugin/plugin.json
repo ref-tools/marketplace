@@ -1,7 +1,7 @@
 {
   "name": "ref-plan",
   "version": "1.0.1",
-  "description": "List, create, read, and edit Ref plan documents, and coordinate sub-agents.",
+  "description": "List, read, and write refs, and coordinate sub-agents.",
   "author": {
     "name": "Ref",
     "url": "https://ref.tools"
