@@ -16,14 +16,76 @@ DRY="${SWEEP_DRY_RUN:-0}"
 
 list() { echo "cleanup: $*"; }
 
+# Refuse destructive targets: /, $HOME, git toplevel, shallow paths (<2 components).
+assert_safe_path() {
+  local raw="${1:?path required}"
+  local abs
+  if [[ "${raw}" = /* ]]; then
+    abs="${raw}"
+  elif [[ -e "${raw}" || -L "${raw}" ]]; then
+    abs="$(cd "$(dirname -- "${raw}")" && pwd)/$(basename -- "${raw}")"
+  else
+    abs="$(pwd)/${raw}"
+  fi
+  while [[ "${abs}" == */ && "${abs}" != / ]]; do
+    abs="${abs%/}"
+  done
+
+  if [[ "${abs}" == / ]]; then
+    echo "cleanup: refusing to remove /" >&2
+    exit 1
+  fi
+
+  local home="${HOME:-}"
+  if [[ -n "${home}" ]]; then
+    local home_abs
+    home_abs="$(cd "${home}" 2>/dev/null && pwd)" || home_abs="${home}"
+    while [[ "${home_abs}" == */ && "${home_abs}" != / ]]; do
+      home_abs="${home_abs%/}"
+    done
+    if [[ "${abs}" == "${home_abs}" ]]; then
+      echo "cleanup: refusing to remove \$HOME (${abs})" >&2
+      exit 1
+    fi
+  fi
+
+  if command -v git >/dev/null 2>&1; then
+    local toplevel
+    toplevel="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+    if [[ -n "${toplevel}" ]]; then
+      while [[ "${toplevel}" == */ && "${toplevel}" != / ]]; do
+        toplevel="${toplevel%/}"
+      done
+      if [[ "${abs}" == "${toplevel}" ]]; then
+        echo "cleanup: refusing to remove git toplevel (${abs})" >&2
+        exit 1
+      fi
+    fi
+  fi
+
+  local count=0
+  local rest="${abs#/}"
+  if [[ -n "${rest}" ]]; then
+    local IFS=/
+    # shellcheck disable=SC2206
+    local parts=(${rest})
+    count=${#parts[@]}
+  fi
+  if (( count < 2 )); then
+    echo "cleanup: refusing path with fewer than 2 components: ${abs}" >&2
+    exit 1
+  fi
+}
+
 remove_path() {
   local p="${1:?path required}"
+  assert_safe_path "${p}"
   list "would remove path: ${p}"
   if [[ "${DRY}" == "1" ]]; then
     return 0
   fi
   if [[ -e "${p}" || -L "${p}" ]]; then
-    rm -rf "${p}"
+    rm -rf -- "${p}"
     echo "cleanup: removed ${p}"
   else
     echo "cleanup: skip (missing) ${p}"
@@ -44,7 +106,7 @@ if [[ -n "${SWEEP_PID_FILE:-}" ]]; then
           echo "cleanup: signaled pid ${pid}"
         fi
       done < "${pf}"
-      rm -f "${pf}"
+      rm -f -- "${pf}"
     fi
   else
     list "no pid file at ${pf}"
@@ -68,8 +130,8 @@ fi
 if [[ -n "${SWEEP_BRANCHES:-}" ]]; then
   list "branches: ${SWEEP_BRANCHES}"
   if [[ "${DRY}" != "1" ]] && command -v git >/dev/null 2>&1; then
-    # Avoid zsh/word-split surprises: iterate via xargs
-    printf '%s\n' ${SWEEP_BRANCHES} | xargs -n1 -I{} git branch -D {} 2>/dev/null || true
+    # Avoid zsh/word-split surprises: iterate via xargs (-I implies one arg per line)
+    printf '%s\n' ${SWEEP_BRANCHES} | xargs -I{} git branch -D {} 2>/dev/null || true
   fi
 fi
 

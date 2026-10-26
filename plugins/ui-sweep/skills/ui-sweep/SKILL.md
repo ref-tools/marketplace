@@ -20,7 +20,7 @@ Key from [ref.tools/keys](https://ref.tools/keys). Then `/plugin configure ref-p
 
 Also needs: subagents, Playwright (or equivalent), `git`, and `gh` for `--fix`. Without `gh` and `--fix` was requested, say so and stop after the report.
 
-Paths below are relative to this plugin root (`plugins/ui-sweep/`).
+Paths below are relative to this skill's own directory (next to this file).
 
 ## Inputs
 
@@ -75,7 +75,7 @@ Templates: `references/ref-templates.md`.
 - **Writer:** insert sections verbatim; verify image counts on read-back.
 - **`scripts/regroup.mjs`:** regroup by UI element into `:::collapse` sections; "Look at these" first; Status on top.
 - **Bug ref:** triage by area. Product calls → Needs you with a recommended pick; deeper work → follow-ups.
-- Without `--fix`, go to cleanup (`scripts/cleanup.sh` and the checklist in `references/fix-and-land.md`).
+- Without `--fix`, go to cleanup (below).
 
 ### 5–8. Fix and land (`--fix` only)
 
@@ -85,6 +85,18 @@ Read `references/fix-and-land.md` only when `--fix` is set.
 6. Split into **draft PRs by area** from fresh worktrees off `origin/main`. Each must pass alone or stack. PrLinks to the bug ref; chips on fixed sections.
 7. Watch refs for comments; reply → message the owning agent → resolve when landed. Same loop for review bots; fix high-severity / correctness; defer narrow edges as follow-ups.
 8. Before any merge: integrate all PRs locally with a real install; run the repo's pre-merge gate, layout/visual tests, feature e2e, one real E2E, flag-off parity. **User merges** — never merge or mark ready. After each merge: merge main into remaining PRs (no rebase/force-push). Then cleanup.
+
+## Cleanup (every run)
+
+After the default report (phases 1–4) or after `--fix` phase 8, clean up. Run `scripts/cleanup.sh` with explicit env (see script header), then verify:
+
+- Stop stray processes (headless browsers, dev servers, workers).
+- Remove worktrees and local sweep branches.
+- Delete sandbox dirs and temp files.
+- Stop the comment watch.
+- Mark both refs (catalog and Bugs) done.
+
+Anything a permission rule blocks (e.g. wiping a shared database) → surface as a user action in Needs you / Status. Do not retry around a denial.
 
 ## Guardrails
 
@@ -107,5 +119,5 @@ Put these in the BRIEF and every subagent prompt.
 | `references/brief-template.md` | Phase 2 — BRIEF + manifest schema |
 | `references/capture-prompts.md` | Phase 3 — live / edge / second-sandbox / re-shoot |
 | `references/ref-templates.md` | Phase 4 — catalog + Bugs skeletons |
-| `references/fix-and-land.md` | Phases 5–8 and cleanup checklist (`--fix` or cleanup) |
+| `references/fix-and-land.md` | Phases 5–8 only (`--fix`) |
 | `references/pitfalls.md` | Anytime a phase fails oddly |

@@ -1,6 +1,6 @@
 # Fix and land (`--fix` only)
 
-Read this only when the user passed `--fix`, or when running the cleanup checklist after any run.
+Read this only when the user passed `--fix`. Cleanup for every run (including report-only) is in SKILL.md, not here.
 
 ## Fix-agent prompt
 
@@ -57,15 +57,3 @@ Fix failures on the owning branch. Re-shoot if earlier shots used a stand-in.
 - The skill **never** merges or marks PRs ready. Bugs → Status states merge order and what each later PR needs after an earlier one lands.
 - After each user merge: merge `main` into remaining PR branches. Never rebase or force-push. Re-apply known conflict resolutions.
 - A fix that lands on a branch after its PR merged → follow-up PR, cherry-picked onto main.
-
-## Cleanup checklist (every run)
-
-Run `scripts/cleanup.sh` with explicit env (see script header). Then verify:
-
-- [ ] Headless browsers, dev servers, workers stopped
-- [ ] Worktrees and local sweep branches removed
-- [ ] Sandbox dirs and temp files deleted
-- [ ] Comment watch stopped
-- [ ] Catalog and Bugs refs marked done
-
-Anything a permission rule blocks (e.g. wiping a shared database) → user action in Needs you / Status.
