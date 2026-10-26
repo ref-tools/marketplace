@@ -12,15 +12,6 @@ A sweep **boots an isolated local copy of the app**, screenshots every screen an
 curl -fsSL https://api.plan.ref.tools/plugins/install/local-agent | bash
 ```
 
-**Claude Code alternative** — install the `ref-plan` plugin from this marketplace:
-
-```sh
-claude plugin marketplace add ref-tools/marketplace
-claude plugin install ref-plan@ref-tools --config api_key=YOUR_REF_API_KEY
-```
-
-Get a key at [ref.tools/keys](https://ref.tools/keys). If you installed without a key: `/plugin configure ref-plan@ref-tools`.
-
 **Other agents** — see [docs.ref.tools/plans/install](https://docs.ref.tools/plans/install/index).
 
 ## Install this skill
