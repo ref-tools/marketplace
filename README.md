@@ -32,7 +32,16 @@ To remove everything, see [Uninstall](#uninstall).
 
 ## Skills
 
-Skills will be listed here once published.
+Skills in this repo install through the Claude Code marketplace:
+
+```sh
+claude plugin marketplace add ref-tools/marketplace
+claude plugin install ui-sweep@ref-tools
+```
+
+| Skill | What it does |
+|---|---|
+| `ui-sweep` | Agent skill for web apps — sandbox the app, catalog every screen into a Ref, report bugs with fix proposals, leave a reusable `.ui-sweep/` scaffold; with `--fix`, ship draft PRs and work the review loop. Works with any agent that reads SKILL.md. Requires the Ref MCP. |
 
 ## MCP servers
 

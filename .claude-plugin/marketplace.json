@@ -1,6 +1,6 @@
 {
   "name": "ref-tools",
-  "description": "Claude Code plugins for Ref — documentation search and refs.",
+  "description": "Claude Code plugins for Ref — documentation search, refs, and UI sweep.",
   "owner": {
     "name": "Ref",
     "url": "https://ref.tools"
@@ -17,6 +17,12 @@
       "source": "./plugins/ref-plan",
       "version": "1.0.1",
       "description": "List, read, and write refs, and coordinate sub-agents."
+    },
+    {
+      "name": "ui-sweep",
+      "source": "./plugins/ui-sweep",
+      "version": "0.1.0",
+      "description": "Agent skill to sweep a web app feature's UI end to end: sandbox the app, catalog every screen into a Ref, report bugs with fix proposals, leave a reusable .ui-sweep/ scaffold; with --fix, ship draft PRs and work the review loop."
     }
   ]
 }
