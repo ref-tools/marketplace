@@ -14,7 +14,7 @@ jobs:
           node-version: "22"
       - name: Install Codex CLI
         run: npm install -g @openai/codex@0.164.0
-      - name: Add marketplace and require both plugins
+      - name: Add marketplace and require ref-context
         env:
           CODEX_HOME: ${{ runner.temp }}/codex-home
         run: |
@@ -26,8 +26,10 @@ jobs:
           import json, os
           data = json.loads(os.environ["LISTED"])
           names = {p["name"] for p in data.get("available", []) + data.get("installed", [])}
-          missing = {"ref-context", "ref-plan"} - names
+          missing = {"ref-context"} - names
           if missing:
               raise SystemExit(f"missing plugins from ref-skills marketplace: {sorted(missing)}; got {sorted(names)}")
+          if "ref-plan" in names:
+              raise SystemExit("ref-plan must not be in the Codex marketplace (no API-key collection path)")
           print("ok:", ", ".join(sorted(names)))
           PY
