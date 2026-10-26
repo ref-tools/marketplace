@@ -1,6 +1,6 @@
 {
   "name": "ref-tools",
-  "description": "Claude Code plugins for Ref — documentation search, plan documents, and the design-process skill.",
+  "description": "Claude Code plugins for Ref — documentation search, plan documents, design-process skill, and UI sweep.",
   "owner": {
     "name": "Ref",
     "url": "https://ref.tools"
@@ -21,6 +21,12 @@
       "name": "ref-design-process",
       "source": "./plugins/ref-design-process",
       "description": "A skill that guides agents through Ref's design process. Stub — content coming."
+    },
+    {
+      "name": "ui-sweep",
+      "source": "./plugins/ui-sweep",
+      "version": "0.1.0",
+      "description": "Sweep a feature's UI end to end: sandbox the app, catalog every screen into a Ref, report bugs with fix proposals; with --fix, ship draft PRs and work the review loop."
     }
   ]
 }

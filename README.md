@@ -37,11 +37,13 @@ Skills in this repo install through the Claude Code marketplace:
 ```sh
 claude plugin marketplace add ref-tools/marketplace
 claude plugin install ref-design-process@ref-tools
+claude plugin install ui-sweep@ref-tools
 ```
 
 | Skill | What it does |
 |---|---|
 | `ref-design-process` | Guides agents through Ref's design process — how to structure a plan, and what to check before calling one done. (Stub — content coming.) |
+| `ui-sweep` | Manual `/ui-sweep` — sandbox the app, catalog every screen into a Ref, report bugs with fix proposals; with `--fix`, ship draft PRs and work the review loop. Requires the Ref MCP (`ref-plan`). |
 
 ## MCP servers
 

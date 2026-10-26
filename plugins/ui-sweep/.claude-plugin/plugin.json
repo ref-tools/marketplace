@@ -1,0 +1,11 @@
+{
+  "name": "ui-sweep",
+  "version": "0.1.0",
+  "description": "Sweep a feature's UI end to end: sandbox the app, catalog every screen into a Ref, report bugs with fix proposals; with --fix, ship draft PRs and work the review loop. Requires the Ref MCP (ref-plan plugin).",
+  "author": {
+    "name": "Ref",
+    "url": "https://ref.tools"
+  },
+  "homepage": "https://ref.tools",
+  "license": "MIT"
+}
