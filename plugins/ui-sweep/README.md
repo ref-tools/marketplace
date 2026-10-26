@@ -4,6 +4,15 @@ An agent skill that turns "sweep the UI of this feature" into a repeatable run i
 
 A sweep **boots an isolated local copy of the app**, screenshots every screen and state into a Ref the team can comment on, and reports the bugs it finds with short fix proposals. That costs **dev-server / sandbox processes and agent tokens**. With `--fix`, it also opens **draft PRs** (one per area), works review comments, and runs an integrated gate before you merge.
 
+## What you get
+
+1. **Catalog ref** titled `ui-sweep: <Feature name>` — Status, "Look at these", then one collapsed section per UI element.
+2. **`Bugs` sub-ref** — Needs you (product calls), bugs by area with severity / repro / suspected file / short fix proposal, follow-ups. With `--fix`, a Status PR table sits on top.
+3. **Draft PRs** (only with `--fix`), one per area, attached to the bug ref.
+4. **A clean machine** — sandbox processes, worktrees, local branches, and temp data removed.
+
+The skill never merges PRs or marks them ready; you do.
+
 ## Install this skill
 
 **Claude Code** — from this marketplace:
@@ -48,15 +57,6 @@ Or in plain language: `run ui-sweep on <feature ref>, with --fix`.
 | `--fix` | After the catalog and bug report, fix obvious bugs as linked draft PRs, work reviews, and prepare merge order. Without `--fix`, the run stops after the report and cleans up. |
 
 Optional mid-run choices (the skill may ask): which external integrations to call for real; viewports (desktop 1440×900 by default, plus phone 390×844 and dark mode).
-
-### What you get
-
-1. **Catalog ref** titled `ui-sweep: <Feature name>` — Status, "Look at these", then one collapsed section per UI element.
-2. **`Bugs` sub-ref** — Needs you (product calls), bugs by area with severity / repro / suspected file / short fix proposal, follow-ups. With `--fix`, a Status PR table sits on top.
-3. **Draft PRs** (only with `--fix`), one per area, attached to the bug ref.
-4. **A clean machine** — sandbox processes, worktrees, local branches, and temp data removed.
-
-The skill never merges PRs or marks them ready; you do.
 
 ## Requirements
 
