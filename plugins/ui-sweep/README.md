@@ -49,7 +49,7 @@ The skill never merges PRs or marks them ready; you do.
 
 ## Requirements
 
-- **Ref MCP** — write refs, upload media, manage comments, attach PRs. Install the `ref-plan` plugin from this marketplace (see below). If it isn't connected, `/ui-sweep` stops before booting anything.
+- **Ref MCP** — write refs, upload media, manage comments, attach PRs. Install the `ref-plan` plugin from this marketplace (see [Install Ref MCP](#install-ref-mcp-ref-plan) above). If it isn't connected, `/ui-sweep` stops before booting anything.
 - **Subagents** — the orchestrator fans out inventory, capture, upload, and (with `--fix`) fix agents.
 - **Playwright** (or another headless browser library the sweep can drive).
 - **`git`**, plus **`gh`** when using `--fix`.
