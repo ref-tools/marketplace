@@ -1,12 +1,12 @@
 # Ref Marketplace
 
-Claude Code plugins and skills for [Ref](https://ref.tools).
+Plugins and Skills for [Ref](https://ref.tools).
 
 #### What is Ref?
 
-Ref is a tool for plan authorship and review. Humans and agents work together in shared plan documents: you write and review plans as a team, agents read them, do the work, and report progress back to the plan.
+Ref is a tool for authorship and review. Humans and agents work together in shared refs: you write and review refs as a team, agents read them, do the work, and report progress back.
 
-Plan Review moves alignment up front — the team ratifies key decisions before the code gets written, instead of after in code review. It's the cure for [Velocity Sickness](https://ref.tools/blog/ai-broke-alignment).
+Review moves alignment up front — the team ratifies key decisions before the code gets written, instead of after in code review. It's the cure for [Velocity Sickness](https://ref.tools/blog/ai-broke-alignment).
 
 ## Easy install
 
@@ -20,7 +20,7 @@ Supports **Claude Code** and **Codex**. It signs you in through your browser —
 
 - the `ref` CLI to allow your agents more access to control Ref
 - hooks so Ref can track and manage your local agents
-- the **Ref Plans** MCP server, so agents can read, write, and coordinate on plans
+- the **Ref** MCP server, so agents can read, write, and coordinate on refs
 
 Re-run it anytime to upgrade in place. To sign in as a different account:
 
@@ -32,25 +32,18 @@ To remove everything, see [Uninstall](#uninstall).
 
 ## Skills
 
-Skills in this repo install through the Claude Code marketplace:
-
-```sh
-claude plugin marketplace add ref-tools/marketplace
-claude plugin install ref-design-process@ref-tools
-```
-
-| Skill | What it does |
-|---|---|
-| `ref-design-process` | Guides agents through Ref's design process — how to structure a plan, and what to check before calling one done. (Stub — content coming.) |
+Skills will be listed here once published.
 
 ## MCP servers
 
-The install script already sets up Ref Plans for Claude Code and Codex, so **most people don't need this section.** 
+The install script already sets up Ref for Claude Code and Codex, so **most people don't need this section.**
 
 | Plugin | What it does |
 |---|---|
 | `ref-context` | [Ref docs search](https://docs.ref.tools/context/install/index) — `ref_search_documentation` over public and private docs without burning your context window. Not included in the install script. |
-| `ref-plan` | [Ref Plans](https://docs.ref.tools/plans/install/index) — list, create, read, and edit plans, and coordinate sub-agents. Same server the install script sets up; use this only if you skipped the script. |
+| `ref-plan` | [Ref](https://docs.ref.tools/plans/install/index) — list, read, and write refs, and coordinate sub-agents. Same server the install script sets up; use this only if you skipped the script. |
+
+### Claude Code
 
 ```sh
 claude plugin marketplace add ref-tools/marketplace
@@ -67,6 +60,15 @@ If you installed a plugin without its key, configure it from inside Claude Code:
 /plugin configure ref-plan@ref-tools
 ```
 
+### Codex
+
+```sh
+codex plugin marketplace add ref-tools/marketplace
+codex plugin add ref-context@ref-skills
+```
+
+Or open `/plugins` and install from the **Ref Skills** marketplace. `ref-context` signs in with OAuth. For `ref-plan` on Codex, use the [install script](#easy-install) above (Codex plugins cannot take an API key).
+
 For Cursor, VS Code, Windsurf, ChatGPT, and others, see [docs.ref.tools](https://docs.ref.tools).
 
 ## Uninstall
@@ -79,14 +81,4 @@ Your API key stays active on your account — revoke it at [ref.tools/keys](http
 
 ## Contributing
 
-Load a plugin from disk without publishing:
-
-```sh
-claude --plugin-dir ./plugins/ref-context
-```
-
-`/reload-plugins` picks up edits mid-session. Validate before opening a PR:
-
-```sh
-claude plugin validate . --strict
-```
+See [CONTRIBUTING.md](CONTRIBUTING.md).
