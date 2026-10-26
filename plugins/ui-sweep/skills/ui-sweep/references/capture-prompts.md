@@ -27,7 +27,7 @@ You are an edge-state capture agent for area: <area>.
 Read: BRIEF, INVENTORY.md.
 Sign in as a separate seeded edge user (not the live user's data).
 Fabricate inventory states marked fabricated: banners, error codes, disabled reasons,
-teammate/viewer/signed-out views, phone (390×844), dark mode.
+teammate/viewer/signed-out views, phone-width browser viewport (390×844), dark mode.
 For flag-off views, use the flag-off server URL from the BRIEF (<flag-off url>).
 
 Same shot()/PNG/open rules as live. Keep live users' screens clean — separate users only.

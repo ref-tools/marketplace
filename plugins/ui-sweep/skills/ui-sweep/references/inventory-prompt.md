@@ -46,4 +46,4 @@ Report back a short summary: area count, state count, live vs fabricated split, 
 | trigger_data | empty `cardNumber` on submit |
 | reachability | live \| fabricated |
 | producer | fixture `billing/empty-card` or API `POST /billing` 422 |
-| notes | also phone + dark |
+| notes | also phone-width (390×844) + dark |

@@ -1,7 +1,7 @@
 {
   "name": "ui-sweep",
   "version": "0.1.0",
-  "description": "Agent skill to sweep a feature's UI end to end: sandbox the app, catalog every screen into a Ref, report bugs with fix proposals; with --fix, ship draft PRs and work the review loop. Requires the Ref MCP.",
+  "description": "Agent skill to sweep a web app feature's UI end to end: sandbox the app, catalog every screen into a Ref, report bugs with fix proposals, leave a reusable .ui-sweep/ scaffold; with --fix, ship draft PRs and work the review loop. Requires the Ref MCP.",
   "author": {
     "name": "Ref",
     "url": "https://ref.tools"

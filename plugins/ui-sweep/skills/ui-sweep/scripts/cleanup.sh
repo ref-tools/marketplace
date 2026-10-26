@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # List, then remove, UI-sweep sandbox leftovers.
 # Requires explicit paths via env — refuses unguarded variables.
+# Never removes the durable `.ui-sweep/` scaffold at the repo root.
 #
 # Usage:
 #   SWEEP_WORKTREE=/tmp/sweep-wt \
@@ -16,7 +17,7 @@ DRY="${SWEEP_DRY_RUN:-0}"
 
 list() { echo "cleanup: $*"; }
 
-# Refuse destructive targets: /, $HOME, git toplevel, shallow paths (<2 components).
+# Refuse destructive targets: /, $HOME, git toplevel, `.ui-sweep/`, shallow paths (<2 components).
 assert_safe_path() {
   local raw="${1:?path required}"
   local abs
@@ -33,6 +34,18 @@ assert_safe_path() {
 
   if [[ "${abs}" == / ]]; then
     echo "cleanup: refusing to remove /" >&2
+    exit 1
+  fi
+
+  local base
+  base="$(basename -- "${abs}")"
+  if [[ "${base}" == ".ui-sweep" ]]; then
+    echo "cleanup: refusing to remove durable scaffold .ui-sweep (${abs})" >&2
+    exit 1
+  fi
+  # Also refuse anything under a .ui-sweep directory
+  if [[ "${abs}" == */.ui-sweep || "${abs}" == */.ui-sweep/* ]]; then
+    echo "cleanup: refusing to remove path under .ui-sweep (${abs})" >&2
     exit 1
   fi
 
@@ -58,6 +71,10 @@ assert_safe_path() {
       done
       if [[ "${abs}" == "${toplevel}" ]]; then
         echo "cleanup: refusing to remove git toplevel (${abs})" >&2
+        exit 1
+      fi
+      if [[ "${abs}" == "${toplevel}/.ui-sweep" || "${abs}" == "${toplevel}/.ui-sweep/"* ]]; then
+        echo "cleanup: refusing to remove durable scaffold .ui-sweep (${abs})" >&2
         exit 1
       fi
     fi

@@ -29,6 +29,7 @@ Report: root cause, fix summary, files touched, tests run + results, flag-off im
 - Draft PRs only. Body: summary, links to catalog + Bugs (staleness caveat), bug list, gate-off notes, repo status checklist.
 - Each branch typechecks, lints, and passes its own tests **alone**. If not, stack on the PR it depends on.
 - PrLinks every PR to the Bugs ref; add PR chips on fixed sections.
+- **Scaffold PR:** separately, open a draft PR titled **Add ui-sweep scaffold** that contains only `.ui-sweep/` (helpers, run recipe, BRIEF, inventory). Do not fold scaffold files into bug-fix PRs.
 
 ## Review-round prompt (per comment)
 

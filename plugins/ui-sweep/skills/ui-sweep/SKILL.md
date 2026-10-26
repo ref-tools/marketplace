@@ -1,12 +1,12 @@
 ---
 name: ui-sweep
-description: "Sweep a feature's UI end to end: run the app locally in an isolated sandbox, screenshot every screen and state into a Ref the team can comment on, and report the bugs found with short fix proposals; with --fix, also fix them as linked draft PRs. Use when the user asks to sweep, audit or catalog a feature's UI, screenshot every state of a feature, or find UI bugs across a feature."
+description: "Sweep a web app feature's UI end to end: run the app locally in an isolated sandbox, screenshot every screen and state into a Ref the team can comment on, and report the bugs found with short fix proposals; with --fix, also fix them as linked draft PRs. Designed for web apps in a headless browser (not native iOS/Android). Use when the user asks to sweep, audit or catalog a feature's UI, screenshot every state of a feature, or find UI bugs across a feature."
 argument-hint: <feature ref | PR numbers | commit range> [--fix]
 ---
 
 # ui-sweep
 
-A sweep boots servers and spends agent tokens (and with `--fix` opens PRs), so confirm with the user before booting if they didn't explicitly ask for a sweep.
+A sweep boots servers and spends agent tokens (and with `--fix` opens PRs), so confirm with the user before booting if they didn't explicitly ask for a sweep. Designed for **web apps** driven in a headless browser — native iOS/Android apps are out of scope.
 
 **Stop first if the Ref MCP is not connected.** Do not boot anything. Connect the Ref MCP (install script for Claude Code / Codex, or https://docs.ref.tools/plans/install/index for other agents).
 
@@ -17,14 +17,15 @@ Paths below are relative to this skill's own directory (next to this file).
 ## Inputs
 
 - One or more feature refs (ids or URLs), or the PRs / commit range that landed the feature. More can arrive mid-run.
-- Optional: which external integrations to run for real; viewports (desktop 1440×900 default, plus phone 390×844 and dark); `--fix`.
+- Optional: which external integrations to run for real; viewports (desktop 1440×900 default, plus phone-width browser viewport 390×844 and dark); `--fix`.
 
 ## Outputs
 
-1. **Catalog ref** titled `ui-sweep: <Feature name>` (name from the feature ref). Parent of every other sweep ref. Status → "Look at these" → one collapsed section per UI element (healthy, variants, errors, phone, dark). Each shot: title, one-line description, viewport, bugs seen.
+1. **Catalog ref** titled `ui-sweep: <Feature name>` (name from the feature ref). Parent of every other sweep ref. Status → "Look at these" → one collapsed section per UI element (healthy, variants, errors, phone-width, dark). Each shot: title, one-line description, viewport, bugs seen.
 2. **`Bugs` sub-ref.** Default: Needs you → bugs by area (severity, repro, suspected file, short fix proposal) → follow-ups. With `--fix`: Status (PR table + merge order) on top; PR chips on fixed sections.
 3. **Draft PRs, one per area** (`--fix` only), PrLinks on the bug ref, both refs linked in the description.
-4. **Clean machine:** no sandbox processes, worktrees, local branches, or temp data; comment watch stopped.
+4. **Reusable scaffold in `.ui-sweep/`** at the repo root: project-adapted `signIn` / `newPage` / `shot()` helpers, the phase-2 run recipe (boot, ports, seed users, flags), the BRIEF, and `INVENTORY.md`. Later sweeps and normal UI testing reuse it. Default run leaves it uncommitted and the final report tells the user it's there and they can commit it. With `--fix`, open a separate draft PR titled "Add ui-sweep scaffold" (not mixed into bug-fix PRs).
+5. **Clean machine:** no sandbox processes, worktrees, local branches, or temp data; comment watch stopped. **Keep `.ui-sweep/`.**
 
 **Default run:** phases 1–4, then cleanup. **`--fix`:** continues through phases 5–8.
 
@@ -38,15 +39,15 @@ You are the **orchestrator**. Never screenshot or fix code yourself. Boot the sa
 
 - Read every feature ref plus the PRs/commits it lists.
 - **Create the catalog ref immediately**, before research: opening + TODO box.
-- Fan out an **inventory agent** (a read-only research subagent). Prompt: `references/inventory-prompt.md`. Save `INVENTORY.md` in the catalog workspace; every later agent reads it.
+- Fan out an **inventory agent** (a read-only research subagent). Prompt: `references/inventory-prompt.md`. Save `INVENTORY.md` under `.ui-sweep/` (and keep a copy the catalog workspace can read); every later agent reads it.
 
 ### 2. Pre-flight and sandbox
 
-Read `references/project-discovery.md`. Find how the project runs locally (agent docs → launch config → e2e/demo harness → README/scripts). If still unclear, ask **one** question.
+Read `references/project-discovery.md`. **Reuse before writing:** check `.ui-sweep/` first (helpers, run recipe, BRIEF, inventory). If present, load and update it rather than starting from scratch. Then find how the project runs locally (agent docs → launch config → e2e/demo harness → README/scripts). If still unclear, ask **one** question.
 
 Isolation: own ports, own data, own checkout (worktree — never the user's hot-reload tree), feature flags on in this copy only, no real/staging credentials.
 
-Run `scripts/preflight.sh` (ports, stale installs, shared-service health, login smoke tests). Reuse inventory helpers; fill gaps in `scripts/lib.ts` (`signIn`, `shot`, `newPage`) and write a **BRIEF** from `references/brief-template.md`.
+Run `scripts/preflight.sh` (ports, stale installs, shared-service health, login smoke tests). Reuse inventory helpers; write gaps into `.ui-sweep/` — project-adapted `signIn` / `newPage` / `shot()` (from `scripts/lib.ts` as a starting point), the **run recipe** (boot, ports, seed users, flags), and a **BRIEF** from `references/brief-template.md`.
 
 Smoke-test sign-in + one screenshot before fanning out. For code newer than the running sandbox, boot a **second sandbox** from a fresh worktree of the base branch with its own install.
 
@@ -55,7 +56,7 @@ Smoke-test sign-in + one screenshot before fanning out. For code newer than the 
 Prompts: `references/capture-prompts.md`.
 
 - **Live agents, one per area** (+ one per real integration): create test records as sub-refs of the test-data parent; capture in user order; open every PNG; report bugs with severity, repro, suspected file, short fix proposal.
-- **Edge-state agents, one per area:** fabricate states on **separate seeded test users**. Cover banners, errors, disabled reasons, teammate/viewer/signed-out, phone, dark, flag-off (second server with flag off).
+- **Edge-state agents, one per area:** fabricate states on **separate seeded test users**. Cover banners, errors, disabled reasons, teammate/viewer/signed-out, phone-width browser viewport (390×844), dark, flag-off (second server with flag off).
 - A working integration stands in for a broken one; tag those shots; re-shoot when fixed.
 
 ### 4. Publish catalog and bug report
@@ -67,14 +68,14 @@ Templates: `references/ref-templates.md`.
 - **Writer:** insert sections verbatim; verify image counts on read-back.
 - **`scripts/regroup.mjs`:** regroup by UI element into `:::collapse` sections; "Look at these" first; Status on top.
 - **Bug ref:** triage by area. Product calls → Needs you with a recommended pick; deeper work → follow-ups.
-- Without `--fix`, go to cleanup (below).
+- Without `--fix`, go to cleanup (below). In the final report, tell the user `.ui-sweep/` is ready and they can commit it.
 
 ### 5–8. Fix and land (`--fix` only)
 
 Read `references/fix-and-land.md` only when `--fix` is set.
 
 5. Fix clear-cut proposals; wait on Needs you; leave follow-ups listed. Fix agents share one worktree, **disjoint files**, no commits; run the repo's checks on what they touched. Orchestrator checks flag-off parity. Update the bug ref as fixes land.
-6. Split into **draft PRs by area** from fresh worktrees off `origin/main`. Each must pass alone or stack. PrLinks to the bug ref; chips on fixed sections.
+6. Split into **draft PRs by area** from fresh worktrees off `origin/main`. Each must pass alone or stack. PrLinks to the bug ref; chips on fixed sections. Also open a separate draft PR **"Add ui-sweep scaffold"** containing only `.ui-sweep/` — not mixed into bug-fix PRs.
 7. Watch refs for comments; reply → message the owning agent → resolve when landed. Same loop for review bots; fix high-severity / correctness; defer narrow edges as follow-ups.
 8. Before any merge: integrate all PRs locally with a real install; run the repo's pre-merge gate, layout/visual tests, feature e2e, one real E2E, flag-off parity. **User merges** — never merge or mark ready. After each merge: merge main into remaining PRs (no rebase/force-push). Then cleanup.
 
@@ -87,6 +88,7 @@ After the default report (phases 1–4) or after `--fix` phase 8, clean up. Run 
 - Delete sandbox dirs and temp files.
 - Stop the comment watch.
 - Mark both refs (catalog and Bugs) done.
+- **Do not remove `.ui-sweep/`.** Never pass it to `cleanup.sh`.
 
 Anything a permission rule blocks (e.g. wiping a shared database) → surface as a user action in Needs you / Status. Do not retry around a denial.
 
@@ -97,6 +99,7 @@ Put these in the BRIEF and every subagent prompt.
 - **User environment off limits.** Never touch the user's running servers, ports, hot-reload checkout, local daemons, credential stores, or staging/production. Test agents never use the user's own accounts.
 - **Test artifacts nested.** Every test record is a sub-ref of one test-data parent created at boot.
 - **Shared sandbox state stays put.** No agent restarts shared processes, flips sandbox flags, or edits tracked files in the served checkout unless its brief says so.
+- **Scaffold stays.** `.ui-sweep/` is durable project tooling — not temp output.
 - **Git:** no force-push or rebase on PR branches (merge the base instead); fetch before push; never commit accidental proof screenshots/snapshots.
 - **Gates:** follow the repo's `AGENTS.md` / `CONTRIBUTING`. Drafts compile and pass their own tests; pushes under review run the full local gate first.
 - **Flag-off parity:** flagged features must not change flag-off behaviour. Every fix states impact; orchestrator checks.

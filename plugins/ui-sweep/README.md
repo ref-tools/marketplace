@@ -1,15 +1,18 @@
 # ui-sweep
 
-An agent skill that turns "sweep the UI of this feature" into a repeatable run in any repo whose app can run locally. It works with any coding agent that supports SKILL.md skills and can run subagents or parallel background tasks (Claude Code, Codex, Cursor, and others).
+An agent skill that turns "sweep the UI of this web app feature" into a repeatable run in any repo whose app can run locally. It works with any coding agent that supports SKILL.md skills and can run subagents or parallel background tasks (Claude Code, Codex, Cursor, and others). Designed for **web apps** driven in a headless browser — native iOS/Android apps are out of scope.
 
 A sweep **boots an isolated local copy of the app**, screenshots every screen and state into a Ref the team can comment on, and reports the bugs it finds with short fix proposals. That costs **dev-server / sandbox processes and agent tokens**. With `--fix`, it also opens **draft PRs** (one per area), works review comments, and runs an integrated gate before you merge.
+
+The first run also leaves a **reusable UI-testing scaffold** in `.ui-sweep/` at the repo root (helpers, run recipe, BRIEF, inventory). Later sweeps and normal UI testing reuse it; cleanup does not remove it.
 
 ## What you get
 
 1. **Catalog ref** titled `ui-sweep: <Feature name>` — Status, "Look at these", then one collapsed section per UI element.
 2. **`Bugs` sub-ref** — Needs you (product calls), bugs by area with severity / repro / suspected file / short fix proposal, follow-ups. With `--fix`, a Status PR table sits on top.
 3. **Draft PRs** (only with `--fix`), one per area, attached to the bug ref.
-4. **A clean machine** — sandbox processes, worktrees, local branches, and temp data removed.
+4. **A reusable UI-testing scaffold in `.ui-sweep/`** — project helpers, run recipe, BRIEF, and inventory for later sweeps and UI testing. Default run leaves it uncommitted (the report tells you you can commit it); with `--fix`, it ships as its own draft PR ("Add ui-sweep scaffold"), separate from bug-fix PRs.
+5. **A clean machine** — sandbox processes, worktrees, local branches, and temp data removed (`.ui-sweep/` is kept).
 
 The skill never merges PRs or marks them ready; you do.
 
@@ -56,7 +59,7 @@ Or in plain language: `run ui-sweep on <feature ref>, with --fix`.
 | PR numbers / commit range | Alternative when there is no feature ref yet. |
 | `--fix` | After the catalog and bug report, fix obvious bugs as linked draft PRs, work reviews, and prepare merge order. Without `--fix`, the run stops after the report and cleans up. |
 
-Optional mid-run choices (the skill may ask): which external integrations to call for real; viewports (desktop 1440×900 by default, plus phone 390×844 and dark mode).
+Optional mid-run choices (the skill may ask): which external integrations to call for real; viewports (desktop 1440×900 by default, plus phone-width browser viewport 390×844 and dark mode).
 
 ## Requirements
 

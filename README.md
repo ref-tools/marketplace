@@ -43,7 +43,7 @@ claude plugin install ui-sweep@ref-tools
 | Skill | What it does |
 |---|---|
 | `ref-design-process` | Guides agents through Ref's design process — how to structure a plan, and what to check before calling one done. (Stub — content coming.) |
-| `ui-sweep` | Agent skill — sandbox the app, catalog every screen into a Ref, report bugs with fix proposals; with `--fix`, ship draft PRs and work the review loop. Works with any agent that reads SKILL.md. Requires the Ref MCP. |
+| `ui-sweep` | Agent skill for web apps — sandbox the app, catalog every screen into a Ref, report bugs with fix proposals, leave a reusable `.ui-sweep/` scaffold; with `--fix`, ship draft PRs and work the review loop. Works with any agent that reads SKILL.md. Requires the Ref MCP. |
 
 ## MCP servers
 
