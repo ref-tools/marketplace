@@ -4,16 +4,6 @@ An agent skill that turns "sweep the UI of this feature" into a repeatable run i
 
 A sweep **boots an isolated local copy of the app**, screenshots every screen and state into a Ref the team can comment on, and reports the bugs it finds with short fix proposals. That costs **dev-server / sandbox processes and agent tokens**. With `--fix`, it also opens **draft PRs** (one per area), works review comments, and runs an integrated gate before you merge.
 
-## Install the Ref MCP
-
-**Claude Code and Codex** — run the install script (sets up Ref Plans for both):
-
-```sh
-curl -fsSL https://api.plan.ref.tools/plugins/install/local-agent | bash
-```
-
-**Other agents** — see [docs.ref.tools/plans/install](https://docs.ref.tools/plans/install/index).
-
 ## Install this skill
 
 **Claude Code** — from this marketplace:
@@ -54,8 +44,18 @@ The skill never merges PRs or marks them ready; you do.
 
 ## Requirements
 
-- **Ref MCP** — write refs, upload media, manage comments, attach PRs. Install via [Install the Ref MCP](#install-the-ref-mcp) above. If it isn't connected, `/ui-sweep` stops before booting anything.
+- **Ref MCP** — write refs, upload media, manage comments, attach PRs. If it isn't connected, `/ui-sweep` stops before booting anything — see [If your agent is missing the Ref MCP](#if-your-agent-is-missing-the-ref-mcp) below.
 - **Subagents or parallel background tasks** — the orchestrator fans out inventory, capture, upload, and (with `--fix`) fix agents. If the agent has neither, run those agents one after another.
 - **Playwright** (or another headless browser library the sweep can drive).
 - **`git`**, plus **`gh`** when using `--fix`.
 - A way to run the app locally (discovered from agent docs, launch config, e2e/demo harness, or package scripts).
+
+## If your agent is missing the Ref MCP
+
+**Claude Code and Codex** — run the install script (sets up Ref Plans for both):
+
+```sh
+curl -fsSL https://api.plan.ref.tools/plugins/install/local-agent | bash
+```
+
+**Other agents** — see [docs.ref.tools/plans/install](https://docs.ref.tools/plans/install/index).
