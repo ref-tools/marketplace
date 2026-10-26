@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ref product support
+    url: https://docs.ref.tools
+    about: Questions or bugs about the Ref product and hosted APIs (not the skills/plugins in this repo).
