@@ -1,6 +1,6 @@
 # Ref Marketplace
 
-Claude Code plugins and skills for [Ref](https://ref.tools).
+Plugins and Skills for [Ref](https://ref.tools).
 
 #### What is Ref?
 
@@ -65,10 +65,9 @@ If you installed a plugin without its key, configure it from inside Claude Code:
 ```sh
 codex plugin marketplace add ref-tools/marketplace
 codex plugin add ref-context@ref-skills
-codex plugin add ref-plan@ref-skills
 ```
 
-Or open `/plugins` and install from the **Ref Skills** marketplace. `ref-context` signs in with OAuth; `ref-plan` needs an API key from [ref.tools/keys](https://ref.tools/keys).
+Or open `/plugins` and install from the **Ref Skills** marketplace. `ref-context` signs in with OAuth. For `ref-plan` on Codex, use the [install script](#easy-install) above (Codex plugins cannot take an API key).
 
 For Cursor, VS Code, Windsurf, ChatGPT, and others, see [docs.ref.tools](https://docs.ref.tools).
 
