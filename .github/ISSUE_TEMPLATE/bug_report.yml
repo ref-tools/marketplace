@@ -1,0 +1,60 @@
+name: Bug report
+description: Report a problem with a plugin or skill in this marketplace
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: target
+    attributes:
+      label: Plugin or skill
+      description: Which plugin or skill is affected?
+      options:
+        - ref-context
+        - ref-plan
+        - Other / not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Agent
+      description: Which agent are you using?
+      options:
+        - Claude Code
+        - Codex
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: agent_version
+    attributes:
+      label: Agent version
+      description: Version string from your agent (for example, `claude --version` or Codex About).
+      placeholder: e.g. 1.2.3
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: What did you do before the problem appeared?
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What happened instead? Include error messages if you have them.
+    validations:
+      required: true
