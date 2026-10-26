@@ -13,6 +13,22 @@ claude plugin marketplace add ref-tools/marketplace
 claude plugin install ui-sweep@ref-tools
 ```
 
+**Codex** — ask Codex to install it with its built-in skill installer:
+
+```text
+Use the skill-installer skill to install https://github.com/ref-tools/marketplace/tree/main/plugins/ui-sweep/skills/ui-sweep
+```
+
+or copy it manually (Codex loads skills from `$CODEX_HOME/skills/<name>`, default `~/.codex/skills`):
+
+```sh
+git clone --depth 1 https://github.com/ref-tools/marketplace /tmp/ref-marketplace
+mkdir -p ~/.codex/skills
+cp -R /tmp/ref-marketplace/plugins/ui-sweep/skills/ui-sweep ~/.codex/skills/
+```
+
+Restart Codex so it picks up the skill.
+
 **Other agents** — copy `plugins/ui-sweep/skills/ui-sweep/` into your agent's skills directory; see your agent's docs for where that is.
 
 ## Usage
