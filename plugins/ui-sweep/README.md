@@ -4,14 +4,6 @@ Claude Code skill that turns "sweep the UI of this feature" into a repeatable ru
 
 A sweep **boots an isolated local copy of the app**, screenshots every screen and state into a Ref the team can comment on, and reports the bugs it finds with short fix proposals. That costs **dev-server / sandbox processes and agent tokens**. With `--fix`, it also opens **draft PRs** (one per area), works review comments, and runs an integrated gate before you merge.
 
-## Requirements
-
-- **Ref MCP** — write refs, upload media, manage comments, attach PRs. Install the `ref-plan` plugin from this marketplace (see below). If it isn't connected, `/ui-sweep` stops before booting anything.
-- **Subagents** — the orchestrator fans out inventory, capture, upload, and (with `--fix`) fix agents.
-- **Playwright** (or another headless browser library the sweep can drive).
-- **`git`**, plus **`gh`** when using `--fix`.
-- A way to run the app locally (discovered from agent docs, launch config, e2e/demo harness, or package scripts).
-
 ## Install Ref MCP (`ref-plan`)
 
 ```sh
@@ -54,3 +46,11 @@ Optional mid-run choices (the skill may ask): which external integrations to cal
 4. **A clean machine** — sandbox processes, worktrees, local branches, and temp data removed.
 
 The skill never merges PRs or marks them ready; you do.
+
+## Requirements
+
+- **Ref MCP** — write refs, upload media, manage comments, attach PRs. Install the `ref-plan` plugin from this marketplace (see below). If it isn't connected, `/ui-sweep` stops before booting anything.
+- **Subagents** — the orchestrator fans out inventory, capture, upload, and (with `--fix`) fix agents.
+- **Playwright** (or another headless browser library the sweep can drive).
+- **`git`**, plus **`gh`** when using `--fix`.
+- A way to run the app locally (discovered from agent docs, launch config, e2e/demo harness, or package scripts).
