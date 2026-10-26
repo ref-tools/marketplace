@@ -1,13 +1,12 @@
 ---
 name: ui-sweep
-description: "Sweep a feature's UI end to end: run the app locally in an isolated sandbox, screenshot every screen and state into a Ref the team can comment on, and report the bugs found with short fix proposals. With --fix, also fix the obvious bugs as linked draft PRs, work the review comments and test the fixes together."
+description: "Sweep a feature's UI end to end: run the app locally in an isolated sandbox, screenshot every screen and state into a Ref the team can comment on, and report the bugs found with short fix proposals; with --fix, also fix them as linked draft PRs. Use when the user asks to sweep, audit or catalog a feature's UI, screenshot every state of a feature, or find UI bugs across a feature."
 argument-hint: <feature ref | PR numbers | commit range> [--fix]
-disable-model-invocation: true
 ---
 
 # ui-sweep
 
-Manual only. A sweep boots servers and spends agent tokens; with `--fix` it opens PRs. Run only when asked.
+A sweep boots servers and spends agent tokens (and with `--fix` opens PRs), so confirm with the user before booting if they didn't explicitly ask for a sweep.
 
 **Stop first if the Ref MCP is not connected.** Do not boot anything. Point the user at the `ref-plan` plugin:
 

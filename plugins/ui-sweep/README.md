@@ -1,8 +1,8 @@
 # ui-sweep
 
-Manual Claude Code skill that turns "sweep the UI of this feature" into a repeatable run in any repo whose app can run locally.
+Claude Code skill that turns "sweep the UI of this feature" into a repeatable run in any repo whose app can run locally.
 
-A sweep **boots an isolated local copy of the app**, screenshots every screen and state into a Ref the team can comment on, and reports the bugs it finds with short fix proposals. That costs **dev-server / sandbox processes and agent tokens**. With `--fix`, it also opens **draft PRs** (one per area), works review comments, and runs an integrated gate before you merge — so only run it when you asked for a sweep.
+A sweep **boots an isolated local copy of the app**, screenshots every screen and state into a Ref the team can comment on, and reports the bugs it finds with short fix proposals. That costs **dev-server / sandbox processes and agent tokens**. With `--fix`, it also opens **draft PRs** (one per area), works review comments, and runs an integrated gate before you merge.
 
 ## Requirements
 
