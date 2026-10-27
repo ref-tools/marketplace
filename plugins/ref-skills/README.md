@@ -1,4 +1,4 @@
-<a href="https://ref.tools"><img src="https://docs.ref.tools/logo/ref-wordmark-light.svg" alt="Ref" width="120"></a>
+<a href="https://ref.tools"><img src="https://docs.ref.tools/logo/ref-wordmark-light.png" alt="Ref" width="120"></a>
 
 # ref-skills
 
