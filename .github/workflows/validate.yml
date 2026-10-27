@@ -72,9 +72,19 @@ jobs:
           claude plugin marketplace add "$GITHUB_WORKSPACE"
           claude plugin install ref-context@ref-tools --config api_key=ci-dummy
           claude plugin install ref-plan@ref-tools --config api_key=ci-dummy
+          claude plugin install ref-skills@ref-tools
       - name: Check discovered MCP servers
         run: |
           servers="$(claude mcp list 2>&1)"
           printf '%s\n' "$servers"
           grep -F "plugin:ref-context:" <<<"$servers" | grep -F "Needs authentication"
           grep -F "plugin:ref-plan:RefPlan" <<<"$servers"
+      - name: Check ref-skills lists ui-sweep
+        run: |
+          details="$(claude plugin details ref-skills@ref-tools 2>&1)"
+          printf '%s\n' "$details"
+          # details prints plugin name on line 1 and "Skills (N)  ui-sweep";
+          # slash / inventory name is ref-skills:ui-sweep
+          head -n1 <<<"$details" | grep -Fx "ref-skills 0.1.0"
+          grep -E 'Skills \([0-9]+\)[[:space:]]+ui-sweep' <<<"$details"
+          grep -F "Source: ref-skills@ref-tools" <<<"$details"

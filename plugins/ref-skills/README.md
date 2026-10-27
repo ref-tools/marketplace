@@ -1,3 +1,16 @@
+# ref-skills
+
+Agent skills for Ref. Install this plugin once; each skill below is available under the `ref-skills:` prefix.
+
+## Install
+
+**Claude Code** — from this marketplace:
+
+```sh
+claude plugin marketplace add ref-tools/marketplace
+claude plugin install ref-skills@ref-tools
+```
+
 # 🧹 ui-sweep
 
 An agent skill that turns "sweep the UI of this web app feature" into a repeatable run in any repo whose app can run locally. Designed for **web apps** driven in a headless browser. Native iOS/Android apps are out of scope.
@@ -18,17 +31,12 @@ The skill never merges PRs or marks them ready; you do.
 
 ## Install this skill
 
-**Claude Code** — from this marketplace:
-
-```sh
-claude plugin marketplace add ref-tools/marketplace
-claude plugin install ui-sweep@ref-tools
-```
+**Claude Code** — install the `ref-skills` plugin (see [Install](#install) above). The skill shows as `ref-skills:ui-sweep`.
 
 **Codex** — ask Codex to install it with its built-in skill installer:
 
 ```text
-Use the skill-installer skill to install https://github.com/ref-tools/marketplace/tree/main/plugins/ui-sweep/skills/ui-sweep
+Use the skill-installer skill to install https://github.com/ref-tools/marketplace/tree/main/plugins/ref-skills/skills/ui-sweep
 ```
 
 or copy it manually (Codex loads skills from `$CODEX_HOME/skills/<name>`, default `~/.codex/skills`):
@@ -36,19 +44,19 @@ or copy it manually (Codex loads skills from `$CODEX_HOME/skills/<name>`, defaul
 ```sh
 git clone --depth 1 https://github.com/ref-tools/marketplace /tmp/ref-marketplace
 mkdir -p ~/.codex/skills
-cp -R /tmp/ref-marketplace/plugins/ui-sweep/skills/ui-sweep ~/.codex/skills/
+cp -R /tmp/ref-marketplace/plugins/ref-skills/skills/ui-sweep ~/.codex/skills/
 ```
 
 Restart Codex so it picks up the skill.
 
-**Other agents** — copy `plugins/ui-sweep/skills/ui-sweep/` into your agent's skills directory; see your agent's docs for where that is.
+**Other agents** — copy `plugins/ref-skills/skills/ui-sweep/` into your agent's skills directory; see your agent's docs for where that is.
 
 ## Usage
 
 Where the agent supports slash commands:
 
 ```text
-/ui-sweep <feature ref | PR numbers | commit range> [--fix]
+/ref-skills:ui-sweep <feature ref | PR numbers | commit range> [--fix]
 ```
 
 Or in plain language: `run ui-sweep on <feature ref>, with --fix`.
@@ -63,7 +71,7 @@ Optional mid-run choices (the skill may ask): which external integrations to cal
 
 ## Requirements
 
-- **Ref MCP** — write refs, upload media, manage comments, attach PRs. If it isn't connected, `/ui-sweep` stops before booting anything — see [If your agent is missing the Ref MCP](#if-your-agent-is-missing-the-ref-mcp) below.
+- **Ref MCP** — write refs, upload media, manage comments, attach PRs. If it isn't connected, `/ref-skills:ui-sweep` stops before booting anything — see [If your agent is missing the Ref MCP](#if-your-agent-is-missing-the-ref-mcp) below.
 - **Subagents or parallel background tasks** — the orchestrator fans out inventory, capture, upload, and (with `--fix`) fix agents. If the agent has neither, run those agents one after another.
 - **Playwright** (or another headless browser library the sweep can drive).
 - **`git`**, plus **`gh`** when using `--fix`.

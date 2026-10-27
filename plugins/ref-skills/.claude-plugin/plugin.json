@@ -1,0 +1,11 @@
+{
+  "name": "ref-skills",
+  "version": "0.1.0",
+  "description": "Agent skills for Ref. Includes ui-sweep: sweep a web app feature's UI end to end — sandbox the app, catalog every screen into a Ref, report bugs with fix proposals, leave a reusable .ui-sweep/ scaffold; with --fix, ship draft PRs and work the review loop. Requires the Ref MCP.",
+  "author": {
+    "name": "Ref",
+    "url": "https://ref.tools"
+  },
+  "homepage": "https://ref.tools",
+  "license": "MIT"
+}
