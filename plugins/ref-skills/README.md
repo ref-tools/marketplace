@@ -1,15 +1,15 @@
+<a href="https://ref.tools"><img src="https://docs.ref.tools/logo/ref-wordmark-light.svg" alt="Ref" width="120"></a>
+
 # ref-skills
-
-Agent skills for Ref. Install this plugin once; each skill below is available under the `ref-skills:` prefix.
-
-## Install
-
-**Claude Code** — from this marketplace:
 
 ```sh
 claude plugin marketplace add ref-tools/marketplace
 claude plugin install ref-skills@ref-tools
 ```
+
+## Skills
+
+- `ui-sweep` - Catalog screenshots for a complex feature.
 
 # 🧹 ui-sweep
 

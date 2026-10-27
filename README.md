@@ -1,3 +1,5 @@
+<a href="https://ref.tools"><img src="https://docs.ref.tools/logo/ref-wordmark-light.svg" alt="Ref" width="120"></a>
+
 Plugins and Skills for [Ref](https://ref.tools).
 
 [![Website](https://img.shields.io/badge/Website-ref.tools-2b7bbf)](https://ref.tools) [![License: MIT](https://img.shields.io/badge/License-MIT-5a9e1a)](LICENSE)
