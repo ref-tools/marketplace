@@ -1,0 +1,63 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ref",
+  "version": "1.0.0",
+  "description": "Ref turns your chats into rich, visual plans your team can review and Codex can build from.",
+  "author": { "name": "Ref Software, Inc.", "email": "hello@ref.tools", "url": "https://ref.tools" },
+  "homepage": "https://ref.tools",
+  "keywords": ["plan", "plans", "design", "architecture", "diagrams", "mockups", "collaboration", "specs", "tasks", "source of truth", "code review", "tech debt", "Codex", "agents", "handoff"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Ref",
+        "shortDescription": "Make and share beautiful plans",
+        "longDescription": "Ref brings interactive, visual plan documents to your chats for you to review and agents to work from. Ask Ref for a plan and get a rich source of truth for your work with mockups, diagrams, HTML widgets, comment threads and task breakdowns for you to approve and share.\n\nRef is multiplayer; your team can edit, comment on, review and approve from the browser or within their own agent.\n\nWhen you're ready to build, hand tasks back to Codex with a click; Ref updates the plan automatically as work moves forward or evolves.",
+        "developerName": "Ref Software, Inc.",
+        "category": "Developer Tools",
+        "capabilities": [
+          "Rich, visual plans with mockups, diagrams and widgets",
+          "Multiplayer plan editing and comments",
+          "Review and approve plans before code",
+          "Tasks with verification steps",
+          "Hand a task to Codex",
+          "Plans update as work moves",
+          "Share a plan with your team"
+        ],
+        "defaultPrompt": [
+          "Turn this chat into a visual plan with diagrams and tasks I can share with my team",
+          "Open this project's plan, show me what's done so far, and implement the next task",
+          "Look over my recent work and plan out a few small jobs worth doing today"
+        ],
+        "websiteURL": "https://ref.tools",
+        "supportURL": "https://ref.tools/support",
+        "privacyPolicyURL": "https://ref.tools/privacy",
+        "termsOfServiceURL": "https://ref.tools/terms",
+        "brandColor": "#1A1A1A",
+        "brandColorDark": "#E5E5E5",
+        "logo": "./assets/ref-logo-light.svg",
+        "logoDark": "./assets/ref-logo-dark.svg",
+        "composerIcon": "./assets/ref-logo-light.svg",
+        "composerIconDark": "./assets/ref-logo-dark.svg"
+      },
+      "onboardingSkill": "./skills/setup/SKILL.md",
+      "review": {
+        "demo_recording_url": "https://www.youtube.com/watch?v=t5YNGKe0j8M",
+        "test_cases": {
+          "positive": [
+            { "description": "List the user's plans", "prompt": "Use Ref to list my refs.", "tools_triggered": "List", "expected_behavior": "The reply names Sample: Launch checklist, Sample: Onboarding redesign and Sample: Q4 roadmap." },
+            { "description": "Open a plan and read its task status", "prompt": "Open my Sample: Launch checklist ref in Ref and tell me which task is done.", "tools_triggered": "List, Open", "expected_behavior": "The Ref view shows the ref, and the reply names the one Task marked done." },
+            { "description": "Comment on a plan", "prompt": "In Ref, comment on Sample: Onboarding redesign asking whether the diagram covers sign-up.", "tools_triggered": "List, Comments", "expected_behavior": "A new comment with that question appears on the ref." },
+            { "description": "Edit a plan", "prompt": "In Ref, add a \"Risks\" section with three bullets to Sample: Q4 roadmap.", "tools_triggered": "Read, Write", "expected_behavior": "The ref gains a Risks heading with three bullets; the rest is unchanged." },
+            { "description": "Create a new plan and show it in the chat", "prompt": "Use Ref to write a plan for adding dark mode to a web app, with three tasks I can review, then open it in Ref.", "tools_triggered": "Write, Open", "expected_behavior": "A new ref with three Tasks is created; the reply links it, and in ChatGPT the Ref view shows it." }
+          ],
+          "negative": [
+            { "description": "Too vague to act on. The assistant asks which ref and what to change, and edits nothing.", "prompt": "Update my ref in Ref." },
+            { "description": "No such ref exists. The assistant says it found none and creates nothing.", "prompt": "Open my Ref called Secret Project." },
+            { "description": "Ref has no delete. The assistant says so and may archive the ref directly (reversible) or offer to archive; it does not delete.", "prompt": "Delete my Sample: Q4 roadmap ref in Ref." }
+          ]
+        }
+      },
+      "publication": { "release_notes": "First release." }
+    }
+  }
+}
