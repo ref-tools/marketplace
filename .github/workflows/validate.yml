@@ -8,8 +8,20 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - name: Install pinact
+        run: |
+          set -euo pipefail
+          VERSION=v5.0.2
+          ASSET=pinact_linux_amd64.tar.gz
+          EXPECTED_SHA256=7f003d8f51e984c2264d2009d430e3e0e87ae404a0e2dc2a9a277b0f731bf5b7
+          curl -sSL -o "$ASSET" "https://github.com/suzuki-shunsuke/pinact/releases/download/${VERSION}/${ASSET}"
+          echo "${EXPECTED_SHA256}  ${ASSET}" | sha256sum -c -
+          sudo tar -xzf "$ASSET" -C /usr/local/bin pinact
+          pinact version
+      - name: Check actions are SHA-pinned
+        run: pinact run --check
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: "22"
       - name: Install Claude Code CLI
@@ -61,8 +73,8 @@ jobs:
     steps:
       - name: Configure isolated Claude directory
         run: echo "CLAUDE_CONFIG_DIR=$RUNNER_TEMP/claude" >> "$GITHUB_ENV"
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: "22"
       - name: Install Claude Code CLI
