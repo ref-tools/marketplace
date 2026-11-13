@@ -52,24 +52,31 @@ The install script already sets up Ref for Claude Code and Codex, so **most peop
 | Plugin | What it does |
 |---|---|
 | `ref-context` | [Ref docs search](https://docs.ref.tools/context/install/index) — `ref_search_documentation` over public and private docs without burning your context window. Not included in the install script. |
-| `ref-plan` | [Ref](https://docs.ref.tools/plans/install/index) — list, read, and write refs, and coordinate sub-agents. Same server the install script sets up; use this only if you skipped the script. |
+| `ref-plan` | [Ref](plugins/ref-plan/README.md) — OAuth connection for reading and writing refs, with opt-in automatic memory in compatible Claude Code hosts. Uses the same server as the local installer. |
 
 ### Claude Code
 
 ```sh
 claude plugin marketplace add ref-tools/marketplace
 claude plugin install ref-context@ref-tools --config api_key=YOUR_REF_API_KEY
-claude plugin install ref-plan@ref-tools --config api_key=YOUR_REF_API_KEY
+claude plugin install ref-plan@ref-tools
 ```
 
-Plugin installation does not prompt for a Ref API key; get one at [ref.tools/keys](https://ref.tools/keys) and pass it with `--config` as shown above.
+`ref-plan` uses OAuth: open `/mcp` and authenticate RefPlan. Existing `ref-plan` users need to authenticate again after upgrading from API-key versions. `ref-context` still takes a Ref API key from [ref.tools/keys](https://ref.tools/keys).
 
-If you installed a plugin without its key, configure it from inside Claude Code:
+If you installed `ref-context` without its key, configure it from inside Claude Code:
 
 ```text
 /plugin configure ref-context@ref-tools
-/plugin configure ref-plan@ref-tools
 ```
+
+### Claude web and desktop
+
+Open **Customize > Plugins > Add > Add marketplace**, enter
+`https://github.com/ref-tools/marketplace`, and install **ref-plan**. Complete OAuth
+to connect Ref. See [Ref setup and optional memory](plugins/ref-plan/README.md) for
+host support and configuration. Automatic memory is off by default and requires a
+compatible Claude Code host; installing in Chat or Cowork does not make the module run.
 
 ### Codex
 
@@ -78,7 +85,7 @@ codex plugin marketplace add ref-tools/marketplace
 codex plugin add ref-context@ref-skills
 ```
 
-Or open `/plugins` and install from the **Ref Skills** marketplace. `ref-context` signs in with OAuth. For `ref-plan` on Codex, use the [install script](#easy-install) above (Codex plugins cannot take an API key).
+Or open `/plugins` and install from the **Ref Skills** marketplace. `ref-context` signs in with OAuth. For Ref planning and automatic memory on Codex, use the [install script](#easy-install) above; the Claude memory module is not a Codex hook.
 
 For Cursor, VS Code, Windsurf, ChatGPT, and others, see [docs.ref.tools](https://docs.ref.tools).
 

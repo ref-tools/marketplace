@@ -25,7 +25,9 @@ jobs:
         with:
           node-version: "22"
       - name: Install Claude Code CLI
-        run: npm install -g @anthropic-ai/claude-code@2.1.295
+        run: npm install -g @anthropic-ai/claude-code@2.1.323
+      - name: Test Ref memory module and package wiring
+        run: node --test tests/*.test.mjs
       - name: Validate marketplace
         run: claude plugin validate . --strict
       - name: Check marketplace versions match plugin.json
@@ -78,12 +80,12 @@ jobs:
         with:
           node-version: "22"
       - name: Install Claude Code CLI
-        run: npm install -g @anthropic-ai/claude-code@2.1.295
+        run: npm install -g @anthropic-ai/claude-code@2.1.323
       - name: Install marketplace plugins
         run: |
           claude plugin marketplace add "$GITHUB_WORKSPACE"
           claude plugin install ref-context@ref-tools --config api_key=ci-dummy
-          claude plugin install ref-plan@ref-tools --config api_key=ci-dummy
+          claude plugin install ref-plan@ref-tools
           claude plugin install ref-skills@ref-tools
       - name: Check discovered MCP servers
         run: |

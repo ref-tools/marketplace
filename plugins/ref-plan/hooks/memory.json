@@ -1,0 +1,8 @@
+{
+  "server": "RefPlan",
+  "tool": "Memory",
+  "arguments": {
+    "action": "context",
+    "scope": "user"
+  }
+}
