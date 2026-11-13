@@ -7,9 +7,7 @@
       "extensions": {
         "com.openai": {
           "auth": {
-            "type": "api_key",
-            "headerScheme": "custom_header",
-            "headerName": "x-ref-api-key"
+            "type": "oauth"
           }
         }
       }

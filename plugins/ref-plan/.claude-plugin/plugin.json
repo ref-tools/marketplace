@@ -1,7 +1,7 @@
 {
   "name": "ref-plan",
-  "version": "1.0.1",
-  "description": "List, read, and write refs, and coordinate sub-agents.",
+  "version": "1.2.0",
+  "description": "Read and write refs through OAuth, with optional personal memory alongside native memory in Claude Code.",
   "author": {
     "name": "Ref",
     "url": "https://ref.tools"
@@ -9,12 +9,11 @@
   "homepage": "https://docs.ref.tools/plans/install/claude-code",
   "license": "MIT",
   "userConfig": {
-    "api_key": {
-      "type": "string",
-      "title": "Ref API key",
-      "description": "Your Ref API key from https://ref.tools/keys",
-      "sensitive": true,
-      "required": true
+    "automaticMemory": {
+      "type": "boolean",
+      "title": "Automatic memory",
+      "description": "Load your personal Ref memory index alongside native memory. Start a new chat after changing this setting.",
+      "default": false
     }
   }
 }
