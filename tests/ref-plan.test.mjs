@@ -31,11 +31,14 @@ function fixture(options = { automaticMemory: true }) {
     },
     ui: { log: (text) => logs.push(text) },
   };
-  register((event, fn) => {
-    assert.equal(event, 'prompt.context');
-    handler = fn;
-  }, options);
-  return { host, calls, logs, native, handler, run: () => handler(host, {}, async () => native) };
+  const hooks = new Map();
+  register((event, fn) => hooks.set(event, fn), options);
+  handler = hooks.get('prompt.context');
+  return {
+    host, calls, logs, native, handler, hooks,
+    run: () => handler(host, {}, async () => native),
+    endSession: () => hooks.get('session.end')(host, { reason: 'clear' }, async () => undefined),
+  };
 }
 
 test('ships an opt-in module wired to the declared OAuth server', async () => {
@@ -105,4 +108,20 @@ test('ships the connection setup skill for the declared server', async () => {
   assert.match(skill, /^---\nname: ref-plans-setup\n/);
   const mcp = await json('.mcp.json');
   assert.ok(skill.includes(mcp.mcpServers[config.server].url));
+});
+
+test('ships the memory import skill', async () => {
+  const skill = await readFile(new URL('skills/ref-import-memory/SKILL.md', root), 'utf8');
+  assert.match(skill, /^---\nname: ref-import-memory\n/);
+  assert.match(skill.split('\n---\n')[0], /\ndisable-model-invocation: true/);
+});
+
+test('reports the missing connection again after /clear, /resume or /branch', async () => {
+  const f = fixture();
+  assert.deepEqual([...f.hooks.keys()].sort(), ['prompt.context', 'session.end']);
+  f.host.mcp.connect = async () => ({ isConnected: false, reason: 'unlisted' });
+  await f.run();
+  await f.endSession();
+  await f.run();
+  assert.equal(f.logs.length, 2);
 });
