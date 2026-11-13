@@ -106,3 +106,8 @@ test('ships the connection setup skill for the declared server', async () => {
   const mcp = await json('.mcp.json');
   assert.ok(skill.includes(mcp.mcpServers[config.server].url));
 });
+
+test('ships the memory import skill', async () => {
+  const skill = await readFile(new URL('skills/ref-import-memory/SKILL.md', root), 'utf8');
+  assert.match(skill, /^---\nname: ref-import-memory\n/);
+});

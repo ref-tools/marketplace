@@ -30,6 +30,10 @@ connector, instead of guessing at Ref content. After you sign in, the browser ta
 can stay on "Completing MCP authentication..." while Claude finishes the handoff.
 That is expected; return to Claude.
 
+A second skill, `ref-import-memory`, copies memories Claude already has (and any you
+paste from another assistant) into Ref memory. Claude proposes the list first and
+writes only what you confirm, skipping secrets and temporary state.
+
 ## Optional memory
 
 Memory is **off by default**. Enable **Automatic memory** in the plugin's
@@ -62,8 +66,8 @@ marketplace.
 
 `hooks/memory.js` is copied unchanged from
 `local-agent/ref-plugin/hooks/memory.js` in the Ref source repository, and
-`skills/ref-plans-setup/SKILL.md` from `local-agent/ref-cloud-plugin/` there. Keep
-both aligned with those sources. The declarative
+the skills under `skills/` from `local-agent/ref-cloud-plugin/skills/` there. Keep
+them aligned with those sources. The declarative
 `hooks/memory.json` selects this package's existing `RefPlan` server name.
 
 ## References
