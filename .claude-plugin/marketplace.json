@@ -15,7 +15,7 @@
     {
       "name": "ref-plan",
       "source": "./plugins/ref-plan",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "description": "Read and write refs through OAuth, with optional personal memory alongside native memory in Claude Code."
     },
     {
