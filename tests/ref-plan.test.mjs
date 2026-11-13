@@ -110,4 +110,5 @@ test('ships the connection setup skill for the declared server', async () => {
 test('ships the memory import skill', async () => {
   const skill = await readFile(new URL('skills/ref-import-memory/SKILL.md', root), 'utf8');
   assert.match(skill, /^---\nname: ref-import-memory\n/);
+  assert.match(skill.split('\n---\n')[0], /\ndisable-model-invocation: true/);
 });

@@ -32,7 +32,8 @@ That is expected; return to Claude.
 
 A second skill, `ref-import-memory`, copies memories Claude already has (and any you
 paste from another assistant) into Ref memory. Claude proposes the list first and
-writes only what you confirm, skipping secrets and temporary state.
+writes only what you confirm, skipping secrets and temporary state. Run it with
+`/ref-plan:ref-import-memory`; Claude does not start it on its own.
 
 ## Optional memory
 

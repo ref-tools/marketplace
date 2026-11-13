@@ -1,6 +1,7 @@
 ---
 name: ref-import-memory
-description: Use when the user wants to import, copy, move or sync their existing memories (Claude's native memory, CLAUDE.md or MEMORY.md notes, or another assistant's memory) into Ref memory, or asks to set up Ref memory from what you already know about them.
+description: Import the user's existing memories (Claude's native memory, CLAUDE.md or MEMORY.md notes, or another assistant's memory) into Ref memory, after they confirm the list.
+disable-model-invocation: true
 ---
 
 # Import memories into Ref
