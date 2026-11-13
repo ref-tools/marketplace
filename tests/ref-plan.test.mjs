@@ -91,3 +91,18 @@ test('connection exceptions do not expose private error details', async () => {
   assert.equal(f.logs.length, 1);
   assert.ok(!f.logs[0].includes('private credential'));
 });
+
+test('reports a missing connection once while every prompt keeps native context', async () => {
+  const f = fixture();
+  f.host.mcp.connect = async () => ({ isConnected: false, reason: 'unlisted' });
+  for (let i = 0; i < 3; i++) assert.equal(await f.run(), f.native);
+  assert.equal(f.calls.length, 0);
+  assert.equal(f.logs.length, 1);
+});
+
+test('ships the connection setup skill for the declared server', async () => {
+  const skill = await readFile(new URL('skills/ref-plans-setup/SKILL.md', root), 'utf8');
+  assert.match(skill, /^---\nname: ref-plans-setup\n/);
+  const mcp = await json('.mcp.json');
+  assert.ok(skill.includes(mcp.mcpServers[config.server].url));
+});

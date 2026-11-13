@@ -22,7 +22,13 @@ is required. Existing API-key users must sign in through OAuth after upgrading t
 
 If another Ref connector already reaches the same server, Claude may reuse it and
 show tools under its name, such as `Ref_Plan`. The memory module uses the connection
-name returned by Claude. This plugin has MCP tools and a memory module, not skills.
+name returned by Claude.
+
+The plugin also ships one skill, `ref-plans-setup`. When the Ref server is missing
+or signed out, it has Claude ask you to sign in, or find and suggest the Ref Plans
+connector, instead of guessing at Ref content. After you sign in, the browser tab
+can stay on "Completing MCP authentication..." while Claude finishes the handoff.
+That is expected; return to Claude.
 
 ## Optional memory
 
@@ -34,7 +40,8 @@ On a compatible Claude Code host, the `prompt.context` module requests your pers
 memory index through the existing MCP `Memory` tool. It adds that index alongside
 native memory without replacing native instructions. The server supplies recall
 and saving guidance; full memory bodies remain available on demand through MCP.
-Connection failures preserve the original context and produce a diagnostic.
+Connection failures preserve the original context and log one diagnostic per chat,
+pointing you to connect Ref.
 
 Automatic recall requires Claude Code 2.1.321+ and permission to run the module.
 Check the Code tab's own runtime version with `/status`; the desktop app and the
@@ -54,8 +61,9 @@ marketplace.
 ## Maintaining the module
 
 `hooks/memory.js` is copied unchanged from
-`local-agent/ref-plugin/hooks/memory.js` in the Ref source repository, release
-`ref-cli-v0.1.100`. Keep it aligned with that implementation. The declarative
+`local-agent/ref-plugin/hooks/memory.js` in the Ref source repository, and
+`skills/ref-plans-setup/SKILL.md` from `local-agent/ref-cloud-plugin/` there. Keep
+both aligned with those sources. The declarative
 `hooks/memory.json` selects this package's existing `RefPlan` server name.
 
 ## References
