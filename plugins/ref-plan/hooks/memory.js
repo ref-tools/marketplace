@@ -9,8 +9,13 @@ function logOnce($, logged, message) {
 export function register(on, options) {
   if (options.automaticMemory === false) return
   // This hook runs on every prompt; a missing Ref connection would otherwise
-  // repeat the same diagnostic each turn of the session.
+  // repeat the same diagnostic each turn of the session. /clear, /resume and
+  // /branch start a new chat without reloading the module, so clear it there.
   const logged = new Set()
+  on('session.end', async ($, event, next) => {
+    logged.clear()
+    return next(event)
+  })
   on('prompt.context', async ($, event, next) => {
     const context = await next(event)
     try {

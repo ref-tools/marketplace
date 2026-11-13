@@ -1,6 +1,6 @@
 ---
 name: ref-plans-setup
-description: Use when the user wants Ref (ref.tools) plans, refs or Ref memory but no Ref Plans tools (such as Home, List, Read, Write or Memory) are available in this session, or a Ref tool call fails because Ref is not connected or needs sign-in.
+description: Use when the user wants Ref (ref.tools) plans, refs or Ref memory but no tools from the Ref Plans server at https://api.plan.ref.tools/mcp (such as Home, List, Read, Write or Memory) are available in this session, or a call to them fails because that server is not connected or needs sign-in.
 ---
 
 # Connect Ref Plans
@@ -10,7 +10,9 @@ Ref's plans, refs and memory come from the Ref Plans MCP server at
 top of that server; without it, nothing in Ref is available. Help the user connect
 it, then continue their task.
 
-1. If Ref tools are available and respond, use them. This skill does not apply.
+1. If tools from this server are available and respond, use them. This skill does
+   not apply. Tools from a different Ref server, such as production Ref while this
+   plugin targets staging, do not count: never answer from them instead.
 2. If this plugin's Ref server is listed but needs sign-in, ask the user to connect
    it: in Claude Code, run `/mcp` and authenticate it; in the Claude app, use
    Connect for this plugin's connector. Sign-in finishes in the browser and hands
