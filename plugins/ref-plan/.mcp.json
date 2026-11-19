@@ -2,7 +2,8 @@
   "mcpServers": {
     "RefPlan": {
       "type": "http",
-      "url": "https://api.plan.ref.tools/mcp"
+      "url": "https://api.plan.ref.tools/mcp",
+      "headersHelper": "\"$HOME/.ref/bin/ref\" mcp-headers 2>/dev/null || echo '{}'"
     }
   }
 }
