@@ -62,7 +62,7 @@ claude plugin install ref-context@ref-tools --config api_key=YOUR_REF_API_KEY
 claude plugin install ref-plan@ref-tools
 ```
 
-`ref-plan` uses OAuth: open `/mcp` and authenticate RefPlan. Existing `ref-plan` users need to authenticate again after upgrading from API-key versions. `ref-context` still takes a Ref API key from [ref.tools/keys](https://ref.tools/keys).
+`ref-plan` uses OAuth: open `/mcp` and authenticate RefPlan. With the Ref CLI from [Easy install](#easy-install) signed in, it uses the CLI's key instead and needs no sign-in. Existing `ref-plan` users need to authenticate again after upgrading from API-key versions. `ref-context` still takes a Ref API key from [ref.tools/keys](https://ref.tools/keys).
 
 If you installed `ref-context` without its key, configure it from inside Claude Code:
 

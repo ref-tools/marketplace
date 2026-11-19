@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { mkdtemp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { test } from 'node:test';
 import { register } from '../plugins/ref-plan/hooks/memory.js';
 
@@ -41,7 +44,7 @@ function fixture(options = { automaticMemory: true }) {
 test('ships an opt-in module wired to the declared OAuth server', async () => {
   const mcp = await json('.mcp.json');
   assert.deepEqual(mcp.mcpServers[config.server], {
-    type: 'http', url: 'https://api.plan.ref.tools/mcp',
+    type: 'http', url: 'https://api.plan.ref.tools/mcp', headersHelper: mcp.mcpServers[config.server].headersHelper,
   });
   assert.deepEqual(await json('hooks/hooks.json'), { modules: ['./memory.js'] });
   assert.equal(manifest.userConfig.automaticMemory.default, false);
@@ -105,4 +108,32 @@ test('ships the connection setup skill for the declared server', async () => {
   assert.match(skill, /^---\nname: ref-plans-setup\n/);
   const mcp = await json('.mcp.json');
   assert.ok(skill.includes(mcp.mcpServers[config.server].url));
+});
+
+// Runs the RefPlan headersHelper as Claude Code does, in a home that holds
+// `ref` only when `cli` gives its script body.
+async function helperHeaders(cli) {
+  const { headersHelper } = (await json('.mcp.json')).mcpServers[config.server];
+  const home = await mkdtemp(join(tmpdir(), 'ref-plan-helper-'));
+  try {
+    if (cli !== undefined) {
+      await mkdir(join(home, '.ref/bin'), { recursive: true });
+      await writeFile(join(home, '.ref/bin/ref'), `#!/bin/sh\n${cli}\n`, { mode: 0o755 });
+    }
+    const out = execFileSync('/bin/sh', ['-c', headersHelper], {
+      env: { PATH: '/usr/bin:/bin', HOME: home }, encoding: 'utf8',
+    });
+    return JSON.parse(out);
+  } finally {
+    await rm(home, { recursive: true, force: true });
+  }
+}
+
+test('without the Ref CLI the headersHelper sends nothing, leaving OAuth', async () => {
+  assert.deepEqual(await helperHeaders(), {});
+  assert.deepEqual(await helperHeaders('echo broken >&2; exit 3'), {});
+});
+
+test("with the Ref CLI the headersHelper sends the CLI's key header", async () => {
+  assert.deepEqual(await helperHeaders(`echo '{"x-ref-api-key":"k"}'`), { 'x-ref-api-key': 'k' });
 });

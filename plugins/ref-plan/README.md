@@ -20,6 +20,11 @@ Open `/mcp` in Claude Code and authenticate the RefPlan server. No API key or Re
 is required. Existing API-key users must sign in through OAuth after upgrading to
 1.2.0; the plugin no longer reads the old `api_key` setting.
 
+Where the [Ref CLI](../../README.md#easy-install) is installed and signed in, the
+server's `headersHelper` sends the CLI's key instead, so no separate sign-in is
+needed. Without the CLI it sends nothing and Claude Code uses OAuth. A key the
+server refuses also falls back to OAuth.
+
 If another Ref connector already reaches the same server, Claude may reuse it and
 show tools under its name, such as `Ref_Plan`. The memory module uses the connection
 name returned by Claude.
